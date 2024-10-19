@@ -15,13 +15,14 @@ function Home() {
                 </div>
             </section>
             <section className="home">
-                <div className='hero-content'>
-                <h1>Welcome to FitSync</h1>
-        <p>
-            Achieve your fitness goals with personalized diet plans, accurate calorie tracking, and exercise routines tailored just for you. FitSync is here to guide your journey toward a healthier, fitter you. Let’s sync up and get started!
-        </p>
-                </div>
                 <div className='hero-image'></div>
+                <div className='hero-content'>
+                    <h1>Welcome to FitSync</h1>
+                    <br></br>
+                    <p>
+                        Achieve your fitness goals with personalized diet plans, accurate calorie tracking, and exercise routines tailored just for you. FitSync is here to guide your journey toward a healthier, fitter you. Let’s sync up and get started!
+                    </p>
+                </div>
             </section>
 
             <section className="benefits">
