@@ -1,5 +1,7 @@
 import React , { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 function SignUp() {
   const navigate = useNavigate();
 
@@ -15,7 +17,16 @@ function SignUp() {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    console.log("form submitted");
+    if(form.email && form.password){
+      try{
+        const result = await axios.post('http://localhost:5000/api/signup', form);
+        alert(result.data.message);
+      }
+      catch(error){
+        console.error('Error sending data:', error);
+        alert('Account already exists');
+      }
+    }
   }
 
   return (

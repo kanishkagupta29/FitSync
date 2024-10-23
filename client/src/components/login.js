@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function LogIn() {
   const navigate = useNavigate()
   const [form, setForm] = useState({});
-  const [responseMessage, setResponseMessage] = useState('');
 
   function handleFormData(e) {
     setForm({
@@ -15,8 +15,17 @@ function LogIn() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log('form submitted');
-    navigate('/dashboard');
+    try{
+      const result = await axios.post('http://localhost:5000/api/login',form);
+      if(result.status === 200){
+        localStorage.setItem('token', result.data.token);
+        navigate('/dashboard');
+      }
+    }
+    catch(error){
+      console.error('error sending login data: ',error);
+      alert('error found, pls try again.......');
+    }
   }
 
   return (
