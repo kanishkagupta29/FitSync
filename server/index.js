@@ -77,6 +77,24 @@ app.post('/api/login', async(req,res) => {
     }
 });
 
+//post personal info
+app.post('/api/personalinfo', async (req , res) => {
+    let data = req.body;
+    console.log('Data received:', data);
+    try {
+        const client = await pool.connect();
+            const query = 'INSERT INTO personaldetails (pname,age,gender,height,weight,goal) VALUES ($1, $2,$3,$4,$5,$6)';
+            const values = [req.body["pname"], req.body["age"], req.body["gender"], req.body["height"], req.body["weight"], req.body["goal"]];
+            await client.query(query, values);
+            res.status(200).json({ message: "Account created" });
+        client.release();
+    } 
+    catch (error) {
+        console.error('Error processing form submission:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
 app.get('/', (req, res) => {
     res.send('Server is working!');
 });
