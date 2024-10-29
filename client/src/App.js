@@ -8,7 +8,7 @@ import DailyGoal from './components/daily_goal';
 import MealPlan from './components/meal_plan';
 import Workout from './components/workout';
 import ProgressTracker from './components/progress_tracker';
-import CalorieLog from './components/calorie_log';
+import CalorieLog from './components/calorieLog';
 import Personalinfo from './components/personalinfo' ;
 
 function App() {
