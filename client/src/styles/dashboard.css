@@ -1,0 +1,19 @@
+.dashboard-header{
+    display: flex;
+    align-items: center;
+}
+
+.dash-logo {
+    font-family: "Allura", cursive;
+    font-size: 50px;
+    color: rgb(108, 211, 216);
+    margin-left:5vw;
+}
+
+.profile-logo{
+    font-size: 40px;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    margin-left:75vw;
+}

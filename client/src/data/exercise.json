@@ -1,0 +1,67 @@
+[
+  {
+    "Excercises": "walking",
+    "calories burned": "150",
+    "videos":"NULL"
+  },
+  {
+    "Excercises": "jumping jacks",
+    "calories burned": "5",
+    "videos":"https://www.youtube.com/watch?v=CWpmIW6l-YA"
+  },
+  {
+    "Excercises": "burpees",
+    "calories burned": "5",
+    "videos":"https://www.youtube.com/watch?v=xQdyIrSSFnE"
+  },
+  {
+    "Excercises": "mountain climbers",
+    "calories burned": "5",
+    "videos":"https://www.youtube.com/watch?v=kLh-uczlPLg"
+  },
+  {
+    "Excercises": "high knees",
+    "calories burned": "4",
+    "videos":"https://www.youtube.com/watch?v=ZNDHivUg7vA"
+  },
+  {
+    "Excercises": "squats",
+    "calories burned": "3",
+    "videos":"https://www.youtube.com/watch?v=xqvCmoLULNY"
+  },
+  {
+    "Excercises": "lunges(alternating legs)",
+    "calories burned": "3",
+    "videos":"https://www.youtube.com/watch?v=tTej-ax9XiA"
+  },
+  {
+    "Excercises": "push-ups",
+    "calories burned": "3",
+    "videos":"https://www.youtube.com/watch?v=jWxvty2KROs"
+  },
+  {
+    "Excercises": "plank",
+    "calories burned": "2",
+    "videos":"https://www.youtube.com/watch?v=pvIjsG5Svck"
+  },
+  {
+    "Excercises": "side plank",
+    "calories burned": "2",
+    "videos":"https://www.youtube.com/watch?v=N_s9em1xTqU"
+  },
+  {
+    "Excercises": "glute bridges",
+    "calories burned": "2",
+    "videos":"https://www.youtube.com/watch?v=Xp33YgPZgns"
+  },
+  {
+    "Excercises": "shadow boxing ",
+    "calories burned": "5",
+    "videos":"https://www.youtube.com/watch?v=wnuLak2onoA"
+  },
+  {
+    "Excercises": "tricep dips",
+    "calories burned": "2",
+    "videos":"https://www.youtube.com/watch?v=89_spgcdQlw"
+  }
+]
