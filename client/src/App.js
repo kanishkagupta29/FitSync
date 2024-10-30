@@ -17,12 +17,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} >
-          {/* Nested routes */}
-          <Route path="daily-goals" element={<DailyGoal />} />
-          <Route path="meal-plans" element={<MealPlan />} />
-          <Route path="calorie-log" element={<CalorieLog />} />
-          <Route path="workout" element={<Workout />} />
-          <Route path="progress-tracker" element={<ProgressTracker />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />

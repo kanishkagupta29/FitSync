@@ -1,27 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
 import '../styles/calorieLog.css';
 
-function CalorieLog() {
+function CalorieLog({getEmailFromToken}) {
     const [form, setForm] = useState({});
     const [calorie, setCalorie] = useState(0);
     const [similarFoods, setSimilarFoods] = useState([]);
     const [eatenItems, setEatenItems] = useState([]);
     const dropdownRef = useRef(null);
-
-    function getEmailFromToken() {
-        const token = localStorage.getItem('token');
-        if (!token) return null;
-    
-        try {
-          const decodedToken = jwtDecode(token);
-          return decodedToken.email;
-        } catch (error) {
-          console.error('Failed to decode token:', error);
-          return null;
-        }
-    }
 
     useEffect(() => {
         fetchFoodItems();
