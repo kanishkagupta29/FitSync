@@ -2,7 +2,7 @@ import React from "react";
 import {jwtDecode} from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import CalorieLog from "./calorieLog";
-
+import Mealplan from "./mealplan";
 function Dashboard(){
     const navigate = useNavigate();
     function getEmailFromToken() {
@@ -19,7 +19,7 @@ function Dashboard(){
       }
     return(
         <div>
-            <CalorieLog getEmailFromToken={getEmailFromToken}/>
+            <Mealplan getEmailFromToken={getEmailFromToken}/>
         </div>
     );
 }

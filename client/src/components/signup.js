@@ -20,6 +20,7 @@ function SignUp() {
     if(form.email && form.password){
       try{
         const result = await axios.post('http://localhost:5000/api/signup', form);
+        localStorage.setItem('token', result.data.token);
         navigate('/personalinfo');
       }
       catch(error){
