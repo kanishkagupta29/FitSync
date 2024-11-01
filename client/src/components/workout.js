@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import "../styles/workout.css";
 import exerciseData from "../data/exercise.json";
+import { jwtDecode } from 'jwt-decode';
+import axios from "axios";
 
 function Workout() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(45);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
@@ -18,9 +20,9 @@ function Workout() {
       return () => clearInterval(interval);
     } else {
       if (isPlaying) {
-        setTimer(2);
+        setTimer(15);
       } else {
-        setTimer(5);
+        setTimer(45);
         setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % exerciseData.length);
       }
       setIsPlaying(!isPlaying);
