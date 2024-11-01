@@ -6,10 +6,11 @@ function CalorieLog({getEmailFromToken}) {
     const [form, setForm] = useState({});
     const [calorie, setCalorie] = useState(0);
     const [similarFoods, setSimilarFoods] = useState([]);
-    const [eatenItems,setEatenItems] = useState([]);
+    const [eatenItems, setEatenItems] = useState([]);
     const dropdownRef = useRef(null);
 
-    useEffect(() => { 
+    useEffect(() => {
+        fetchFoodItems();
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setSimilarFoods([]);
@@ -20,6 +21,21 @@ function CalorieLog({getEmailFromToken}) {
             document.removeEventListener('mousedown', handleClickOutside); // Cleanup
         };
     }, []);
+
+    async function fetchFoodItems() {
+        const email = getEmailFromToken();
+        try {
+            const result = await axios.get(`http://localhost:5000/calorie-log?email=${email}`);
+            if (result.status === 200) {
+                console.log(result.data);
+                setEatenItems(result.data);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     function handleFormData(e) {
         e.preventDefault()
         setForm({
@@ -29,11 +45,16 @@ function CalorieLog({getEmailFromToken}) {
     }
 
     async function addItem(e) {
+        const email = getEmailFromToken();
         if (form.food && form.quantity) {
             try {
-                const result = await axios.post('http://localhost:5000/calorie-log', form);
+                const result = await axios.post('http://localhost:5000/calorie-log', {
+                    ...form,
+                    email
+                });
                 if (result.status === 200) {
                     setCalorie(result.data.totalCalories)
+                    fetchFoodItems();
                     setSimilarFoods([])
                 }
             }
@@ -59,7 +80,10 @@ function CalorieLog({getEmailFromToken}) {
         }
     }
 
+    const totalCalories = eatenItems.reduce((sum, item) => sum + Number(item.calories), 0);
+
     return (
+        <div className='body-div'>
         <div className='main-div'>
             <div className='form'>
                 <label>Food item: </label>
@@ -92,10 +116,32 @@ function CalorieLog({getEmailFromToken}) {
                 <button onClick={addItem} className='add-btn'>Add item</button>
             </div>
             <div>Calories: {calorie}</div>
-
-            <div className='eaten-items'>
-
+        </div>
+        <div className='eaten-items'>
+                {eatenItems.length > 0 ? (
+                    <table className='eaten-items-table'>
+                        <thead>
+                            <tr>
+                                <th>Food Item</th>
+                                <th>Quantity</th>
+                                <th>Calories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {eatenItems.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.food_name}</td>
+                                    <td>{item.quantity}</td>
+                                    <td>{item.calories}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No items logged for today.</p>
+                )}
             </div>
+            <div className='calorie-summary'>Total calories consumed today: {totalCalories}</div>
         </div>
     );
 }

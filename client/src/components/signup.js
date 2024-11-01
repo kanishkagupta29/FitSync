@@ -6,7 +6,6 @@ function SignUp() {
   const navigate = useNavigate();
 
   const [form,setForm] = useState({});
-  const [responseMessage, setResponseMessage] = useState('');
 
   function handleFormData(e){
     setForm({
