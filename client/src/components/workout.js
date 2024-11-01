@@ -1,12 +1,67 @@
 import React, { useRef, useState, useEffect } from "react";
 import "../styles/workout.css";
 import exerciseData from "../data/exercise.json";
-
+import {jwtDecode} from "jwt-decode";
+import axios from "axios";
 function Workout() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
   const [isPlaying, setIsPlaying] = useState(true);
   const [timer, setTimer] = useState(45);
+  const [goalweight,setgoalweight]=useState("");
+    function getEmailFromToken() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.log("no token");
+            return null;
+        }
+    
+        try {
+            console.log("token",token);
+          const decodedToken = jwtDecode(token);
+          return decodedToken.email;
+        } catch (error) {
+          console.error('Failed to decode token:', error);
+          return null;
+        }
+    }
 
+
+
+    useEffect(() => {
+        async function fetchGoal() {
+            const email = getEmailFromToken();
+            if (!email) {
+                console.log("Email not available");
+                return;
+            }
+            try {
+                const result = await axios.get(`http://localhost:5000/goal-weight?email=${email}`);
+                if (result.status === 200) {
+                    console.log(result.data);
+                    setgoalweight(result.data);
+                }
+            } catch (error) {
+                console.error('Error fetching goal weight:', error);
+            }
+        }
+
+        fetchGoal();
+    }, []); // 
+    const goal = goalweight;
+    console.log("---->",goal);
+    let playtime=null;
+    let breaktime=null;
+    if (goal && goal[0].goal === "lose weight") {
+      playtime = 45;
+      breaktime=5;
+    } else if (goal && goal[0].goal === "maintain weight") {
+      playtime = 30;
+      breaktime=15;
+    } else if (goal && goal[0].goal === "gain weight") {
+      playtime = 30;
+      breaktime=20;
+    }
+    // console.log(playtime)
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => {
