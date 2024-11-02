@@ -109,7 +109,12 @@ app.post('/api/signup', async (req , res) => {
             const query = 'INSERT INTO users (username, passwords) VALUES ($1, $2)';
             const values = [req.body["email"], req.body["password"]];
             await client.query(query, values);
-            res.status(200).json({ message: "Account created" });
+            const token = jwt.sign(
+                { email: req.body["email"] },
+                process.env.JWT_SECRET,
+                { expiresIn: '1h' }
+            );
+            res.status(200).json({ message: 'account created', token });
         }
         client.release();
     } catch (error) {
