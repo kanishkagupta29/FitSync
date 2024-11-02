@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 // import './personalinfo.css'
 import { useNavigate } from 'react-router-dom';
 import '../styles/personalinfo.css'
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 function PersonalInfo(){
     const [form,setForm] = useState({});
@@ -15,12 +16,33 @@ const navigate = useNavigate()
     })
     console.log(form);
   }
- 
+  function getEmailFromToken() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.log("no token");
+        return null;
+    }
+
+    try {
+        console.log(token);
+      const decodedToken = jwtDecode(token);
+      return decodedToken.email;
+    } catch (error) {
+      console.error('Failed to decode token:', error);
+      return null;
+    }
+}
   async function submitHandler(e) {
     e.preventDefault();
+    const email = getEmailFromToken();
+    console.log('email got-->',email);
       try{
-        const result = await axios.post('http://localhost:5000/api/personalinfo', form);
+        const result = await axios.post(`http://localhost:5000/api/personalinfo?email=${email}`, {
+            ...form,
+            email
+        });
         alert(result.data.message);
+        navigate('/dashboard');
       }
       catch(error){
         console.error('Error sending data:', error);

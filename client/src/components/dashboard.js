@@ -3,14 +3,16 @@ import { jwtDecode } from 'jwt-decode';
 import Sidebar from "./sidebar";
 import "../styles/dashboard.css";
 import CalorieLog from "./calorieLog";
+import Mealplan from "./mealplan";
+import { useNavigate } from "react-router-dom";
 import DailyGoal from "./daily_goal";
 import Workout from "./workout";
-import MealPlan from "./meal_plan";
+// import MealPlan from "./meal_plan";
 import ProgressTracker from "./progress_tracker";
 
 function Dashboard() {
     const [activeFeature, setActiveFeature] = useState('daily-goals');
-
+    const navigate = useNavigate();
     function getEmailFromToken() {
         const token = localStorage.getItem('token');
         if (!token) return null;
@@ -34,7 +36,7 @@ function Dashboard() {
             case 'workout':
                 return <Workout />;
             case 'meal-plans':
-                return <MealPlan />;
+                return <Mealplan />;
             case 'progress-tracker':
                 return <ProgressTracker />;
             default:
@@ -44,6 +46,7 @@ function Dashboard() {
 
     return (
         <div>
+            {/* <Mealplan getEmailFromToken={getEmailFromToken}/> */}
             <div className="dashboard-header">
                 <Sidebar setActiveFeature={setActiveFeature} />
                 <div className='dash-logo'>FitSync</div>
