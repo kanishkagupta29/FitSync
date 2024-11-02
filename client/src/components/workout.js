@@ -23,18 +23,25 @@ function Workout() {
         setTimer(15);
       } else {
         setTimer(45);
-        setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % exerciseData.length);
-        if ((prevIndex + 1) % exerciseData.length === 0) {
-          setRepeatCount((prevCount) => prevCount + 1);
-          if (repeatCount + 1 >= maxRepeats) {
-            setIsComplete(true);
-            return;
+        setCurrentVideoIndex((prevIndex) => {
+          const newIndex = (prevIndex + 1) % exerciseData.length;
+
+          // Check if we have completed a full cycle of exercises
+          if (newIndex === 0) {
+            setRepeatCount((prevCount) => {
+              const newCount = prevCount + 1;
+              if (newCount >= maxRepeats) {
+                setIsComplete(true);
+              }
+              return newCount;
+            });
           }
-        }
+          return newIndex;
+        });
       }
       setIsPlaying(!isPlaying);
     }
-  }, [timer, isPlaying, currentVideoIndex, repeatCount, isComplete]);
+  }, [timer, isPlaying, isComplete]);
 
   const handleRepeat = () => {
     setCurrentVideoIndex(1);
