@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
 import '../styles/mealplan.css';
-// import jwtDecode from "jwt-decode";
 import { jwtDecode } from "jwt-decode";
 function Mealplan() {
     const [goalweight,setgoalweight]=useState("");
@@ -42,7 +41,7 @@ function Mealplan() {
         }
 
         fetchGoal();
-    }, []); // 
+    }, []); 
     const goal = goalweight;
     console.log("---->",goal);
    

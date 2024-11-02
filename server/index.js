@@ -199,34 +199,6 @@ app.post('/api/personalinfo', async (req, res) => {
     }
 });
 
-
-app.get('/goal-weight', async (req, res) => {
-    console.log('Received request for goal weight:', req.query);
-    const { email } = req.query;
-
-    try {
-        const client = await pool.connect();
-        const query = 'SELECT user_id FROM users WHERE username = $1';
-        const value = [email];
-        const result = await client.query(query, value);
-        console.log(result);
-        if (result.rows.length > 0) {
-            const userId = result.rows[0].user_id;
-            const selectQuery = 'SELECT goal FROM personaldetails WHERE user_id = $1';
-            const result2 = await client.query(selectQuery, [userId]);
-            console.log("User goal data:", result2.rows);
-            res.status(200).json(result2.rows);
-        } else {
-            res.status(404).json({ error: "User not found" });
-        }
-        client.release();
-    } catch (error) {
-        console.error('Error finding goal weight:', error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-
-});
-
 app.get('/', (req, res) => {
     res.send('Server is working!');
 });
