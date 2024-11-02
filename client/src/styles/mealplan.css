@@ -1,0 +1,88 @@
+.meal-plan {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.day-plan {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.meals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.meal {
+    flex: 1 1 45%; /* Flex to take up space nicely */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+strong {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.header {
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.header h3 {
+    color: #3a8e3a; /* Dark green for the goal weight */
+    font-weight: bold;
+    margin-bottom: 10px; /* Spacing below the goal weight */
+}
+
+.header h5 {
+    color: #555; /* Darker gray for subheadings */
+    margin-bottom: 20px; /* Spacing below the suggested meal plan heading */
+}
+
+.header h6 {
+    color: #3a8e3a; /* Dark green for day headings */
+    margin-top: 20px; /* Space above each day heading */
+}
+
+.header div {
+    margin-bottom: 15px; /* Space between meal options */
+    padding: 15px; /* Padding around meal options */
+    background-color: #e3f2e3; /* Light green background for meal sections */
+    border-radius: 5px; /* Rounded corners for meal sections */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.header strong {
+    color: #3a8e3a; /* Consistent color for meal section labels */
+}
+
+.header ul {
+    list-style-type: none; /* Remove default list styles */
+    padding-left: 0; /* Remove padding from the left */
+}
+
+.header li {
+    margin: 5px 0; /* Space between list items */
+    color: #333; /* Dark gray for text */
+    background-color: #ffffff; /* White background for list items */
+    padding: 10px; /* Padding around list items */
+    border-radius: 5px; /* Rounded corners for list items */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.header li:hover {
+    background-color: #d7ffd7; /* Light green hover effect */
+}

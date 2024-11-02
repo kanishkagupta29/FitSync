@@ -66,3 +66,25 @@ button:hover {
 .food-item:hover {
     background-color: #f1f1f1; /* Highlight on hover */
 }
+
+.eaten-items-table {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+.eaten-items-table th, .eaten-items-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.eaten-items-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.calorie-summary {
+    font: 55px;
+    text-align: center;
+}

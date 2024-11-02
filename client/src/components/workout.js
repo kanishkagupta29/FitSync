@@ -1,17 +1,17 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/workout.css";
 import exerciseData from "../data/exercise.json";
-import { jwtDecode } from 'jwt-decode';
-import axios from "axios";
 
 function Workout() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
   const [isPlaying, setIsPlaying] = useState(true);
   const [timer, setTimer] = useState(45);
   const [isComplete, setIsComplete] = useState(false);
+  const [repeatCount, setRepeatCount] = useState(0);
+  const maxRepeats = 3; // Set the maximum repeat limit
 
   useEffect(() => {
-    if(isComplete) return ;
+    if (isComplete) return;
 
     if (timer > 0) {
       const interval = setInterval(() => {
@@ -24,16 +24,24 @@ function Workout() {
       } else {
         setTimer(45);
         setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % exerciseData.length);
+        if ((prevIndex + 1) % exerciseData.length === 0) {
+          setRepeatCount((prevCount) => prevCount + 1);
+          if (repeatCount + 1 >= maxRepeats) {
+            setIsComplete(true);
+            return;
+          }
+        }
       }
       setIsPlaying(!isPlaying);
     }
-  }, [timer, isPlaying, currentVideoIndex, isComplete]);
+  }, [timer, isPlaying, currentVideoIndex, repeatCount, isComplete]);
 
   const handleRepeat = () => {
-    setCurrentVideoIndex(1); 
+    setCurrentVideoIndex(1);
     setIsPlaying(true);
-    setTimer(10);
-    setIsComplete(false); 
+    setTimer(45);
+    setRepeatCount(0);
+    setIsComplete(false);
   };
 
   const currentExercise = exerciseData[currentVideoIndex];

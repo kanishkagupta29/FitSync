@@ -14,3 +14,12 @@ CREATE TABLE personaldetails (
     goal VARCHAR(50),
     user_id INT REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+CREATE TABLE food_log (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(id),
+    food_name VARCHAR(100) NOT NULL,
+    quantity DECIMAL(10, 2) NOT NULL,
+    calories DECIMAL(10, 2) NOT NULL,
+    log_date DATE DEFAULT CURRENT_DATE
+);
