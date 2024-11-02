@@ -43,11 +43,11 @@ app.post('/water_intake', async (req, res) => {
         const client = await pool.connect();
         
         // Step 1: Find user ID based on email
-        const userQuery = 'SELECT id FROM users WHERE username = $1';
+        const userQuery = 'SELECT user_id FROM users WHERE username = $1';
         const userResult = await client.query(userQuery, [email]);
         
         if (userResult.rows.length > 0) {
-            const userId = userResult.rows[0].id;
+            const userId = userResult.rows[0].user_id;
             
             // Step 2: Update if exists, otherwise insert a new row
             const upsertQuery = `
@@ -74,11 +74,11 @@ app.get('/water_intake', async(req, res) => {
     const {email} = req.query;
     try {
         const client = await pool.connect();
-        const query = 'SELECT id FROM users WHERE username = $1';
+        const query = 'SELECT user_id FROM users WHERE username = $1';
         const value = [email];
         const result = await client.query(query, value);
         if (result.rows.length > 0) {
-            const userId = result.rows[0].id;
+            const userId = result.rows[0].user_id;
             const selectQuery = 'SELECT water_glasses FROM daily_log WHERE log_date = $1 AND user_id = $2';
             const date = new Date().toISOString().split('T')[0];
             const result2 = await client.query(selectQuery, [date, userId]);
@@ -106,11 +106,11 @@ app.post('/calorie-log', async (req, res) => {
         const totalCalories = (foodItem.Calories * quantity) / foodItem.Serving;
         try {
             const client = await pool.connect();
-            const query = 'SELECT id FROM users WHERE username = $1';
+            const query = 'SELECT user_id FROM users WHERE username = $1';
             const value = [email];
             const result = await client.query(query, value);
             if (result.rows.length > 0) {
-                const userId = result.rows[0].id;
+                const userId = result.rows[0].user_id;
                 // inserting into food_log table 
                 const insertQuery = 'INSERT INTO food_log (user_id, food_name, quantity, calories, log_date) VALUES ($1, $2, $3, $4, $5)';
                 const date = new Date().toISOString().split('T')[0];
@@ -147,11 +147,11 @@ app.get('/calorie-log', async (req, res) => {
     const { email } = req.query;
     try {
         const client = await pool.connect();
-        const query = 'SELECT id FROM users WHERE username = $1';
+        const query = 'SELECT user_id FROM users WHERE username = $1';
         const value = [email];
         const result = await client.query(query, value);
         if (result.rows.length > 0) {
-            const userId = result.rows[0].id;
+            const userId = result.rows[0].user_id;
             const selectQuery = 'SELECT * FROM food_log WHERE log_date = $1 AND user_id = $2';
             const date = new Date().toISOString().split('T')[0];
             const result2 = await client.query(selectQuery, [date, userId]);
@@ -173,11 +173,11 @@ app.get('/total_calories', async(req, res) => {
     const {email} = req.query;
     try {
         const client = await pool.connect();
-        const query = 'SELECT id FROM users WHERE username = $1';
+        const query = 'SELECT user_id FROM users WHERE username = $1';
         const value = [email];
         const result = await client.query(query, value);
         if (result.rows.length > 0) {
-            const userId = result.rows[0].id;
+            const userId = result.rows[0].user_id;
             const selectQuery = 'SELECT calories FROM daily_log WHERE log_date = $1 AND user_id = $2';
             const date = new Date().toISOString().split('T')[0];
             const result2 = await client.query(selectQuery, [date, userId]);

@@ -17,7 +17,7 @@ CREATE TABLE personaldetails (
 
 CREATE TABLE food_log (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id),
+    user_id INT NOT NULL REFERENCES users(user_id),
     food_name VARCHAR(100) NOT NULL,
     quantity DECIMAL(10, 2) NOT NULL,
     calories DECIMAL(10, 2) NOT NULL,
@@ -29,6 +29,6 @@ CREATE TABLE daily_log(
 	calories INT,
     water_glasses INT,
 	log_date DATE,
-	FOREIGN KEY(user_id) REFERENCES users(id)
+	FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 ALTER TABLE daily_log ADD CONSTRAINT unique_user_date UNIQUE (user_id, log_date);

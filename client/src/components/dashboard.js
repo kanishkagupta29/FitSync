@@ -34,9 +34,9 @@ function Dashboard() {
             case 'calorie-log':
                 return <CalorieLog getEmailFromToken={getEmailFromToken}/>;
             case 'workout':
-                return <Workout />;
+                return <Workout getEmailFromToken={getEmailFromToken}/>;
             case 'meal-plans':
-                return <Mealplan />;
+                return <Mealplan getEmailFromToken={getEmailFromToken}/>;
             case 'progress-tracker':
                 return <ProgressTracker />;
             default:
