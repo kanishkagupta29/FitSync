@@ -28,7 +28,7 @@ function Dashboard() {
     const renderFeatureContent = () => {
         switch (activeFeature) {
             case 'daily-goals':
-                return <DailyGoal />;
+                return <DailyGoal getEmailFromToken={getEmailFromToken}/>;
             case 'calorie-log':
                 return <CalorieLog getEmailFromToken={getEmailFromToken}/>;
             case 'workout':

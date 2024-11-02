@@ -1,0 +1,74 @@
+.daily-goal {
+    display: flex;
+    gap: 20px;
+    margin: 20px auto;
+    padding: 10vw;
+    padding-top: 20px;
+}
+
+/* .cards {
+    padding: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+} */
+
+.water-trackers {
+    margin-bottom: 0;
+    padding: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 40vw;
+}
+
+.suggestion-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 40vw;
+}
+
+.suggestion-box h3 {
+    font-size: 1.6rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.complete-meals {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.complete-meals:disabled {
+    background-color: #b0c4de;
+    cursor: not-allowed;  
+    opacity: 0.6;  
+}
+
+.complete-meals:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-2px);  
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;  
+    text-align: center;  
+    padding: 10px;
+    width: 100%;  
+}

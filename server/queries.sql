@@ -23,3 +23,12 @@ CREATE TABLE food_log (
     calories DECIMAL(10, 2) NOT NULL,
     log_date DATE DEFAULT CURRENT_DATE
 );
+
+CREATE TABLE daily_log(
+	user_id INT,
+	calories INT,
+    water_glasses INT,
+	log_date DATE,
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);
+ALTER TABLE daily_log ADD CONSTRAINT unique_user_date UNIQUE (user_id, log_date);
