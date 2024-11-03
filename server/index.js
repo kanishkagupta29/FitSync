@@ -198,6 +198,7 @@ app.post('/api/personalinfo', async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
+
 app.get('/goal-weight', async (req, res) => {
     console.log('Received request for goal weight:', req.query);
     const { email } = req.query;
