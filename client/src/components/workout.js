@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/workout.css";
 import exerciseData from "../data/exercise.json";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-function Workout() {
+
+function Workout({getEmailFromToken}) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
   const [isPlaying, setIsPlaying] = useState(true);
   
@@ -11,22 +11,6 @@ function Workout() {
   const [repeatCount, setRepeatCount] = useState(0);
   let maxRepeats = 3; // Set the maximum repeat limit
   const [goalweight,setgoalweight]=useState("");
-    function getEmailFromToken() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.log("no token");
-            return null;
-        }
-    
-        try {
-            console.log("token",token);
-          const decodedToken = jwtDecode(token);
-          return decodedToken.email;
-        } catch (error) {
-          console.error('Failed to decode token:', error);
-          return null;
-        }
-    }
     useEffect(() => {
       async function fetchGoal() {
           const email = getEmailFromToken();

@@ -1,0 +1,44 @@
+.water-tracker {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    width: 40vw;
+}
+
+.glass-container {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 20px 18vw;
+    align-items: center;
+}
+
+.glass {
+    width: 4vw;
+    height: 10px;
+    background-color: #e0f7fa;
+    transition: background-color 0.3s ease;
+}
+
+.glass.filled {
+    background-color: #3498db; /* Filled color */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.goal-achieved {
+    color: #27ae60;
+    font-weight: bold;
+    margin-top: 10px;
+}

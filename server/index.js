@@ -5,6 +5,7 @@ import pg from "pg";
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
+import cron from "node-cron";
 dotenv.config();
 
 const app = express();
@@ -26,29 +27,114 @@ const pool = new pg.Pool({
 // Load food data
 const foodData = JSON.parse(fs.readFileSync('foodData.json'));
 
+cron.schedule("0 0 * * *", async () => {
+    try {
+        await pool.query("DELETE FROM food_log WHERE log_date = CURRENT_DATE");
+        console.log("Food log table reset for the day");
+    } catch (error) {
+        console.error("Error resetting food log table:", error);
+    }
+});
+app.post('/water_intake', async (req, res) => {
+    const { email, glasses } = req.body;  // Updated to use req.body instead of req.query
+    const date = new Date().toISOString().split('T')[0];
+
+    try {
+        const client = await pool.connect();
+        
+        // Step 1: Find user ID based on email
+        const userQuery = 'SELECT user_id FROM users WHERE username = $1';
+        const userResult = await client.query(userQuery, [email]);
+        
+        if (userResult.rows.length > 0) {
+            const userId = userResult.rows[0].user_id;
+            
+            // Step 2: Update if exists, otherwise insert a new row
+            const upsertQuery = `
+                INSERT INTO daily_log (user_id, water_glasses, log_date)
+                VALUES ($1, $2, $3)
+                ON CONFLICT (user_id, log_date) 
+                DO UPDATE SET water_glasses = $2;
+            `;
+            await client.query(upsertQuery, [userId, glasses, date]);
+            client.release();
+            
+            res.status(200).json({ message: "Water intake updated successfully" });
+        } else {
+            res.status(404).json({ error: "User not found" });
+        }
+    } catch (error) {
+        console.error('Error updating water intake:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
+app.get('/water_intake', async(req, res) => {
+    const {email} = req.query;
+    try {
+        const client = await pool.connect();
+        const query = 'SELECT user_id FROM users WHERE username = $1';
+        const value = [email];
+        const result = await client.query(query, value);
+        if (result.rows.length > 0) {
+            const userId = result.rows[0].user_id;
+            const selectQuery = 'SELECT water_glasses FROM daily_log WHERE log_date = $1 AND user_id = $2';
+            const date = new Date().toISOString().split('T')[0];
+            const result2 = await client.query(selectQuery, [date, userId]);
+            if (result2.rows.length > 0) {
+                res.status(200).json(result2.rows[0].water_glasses);
+            } else {
+                res.status(200).json(0);
+            }
+        } else {
+            res.status(404).json({ error: "User not found" });
+        }
+        client.release();
+    }
+    catch (error) {
+        console.error('Error saving daily_log:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 app.post('/calorie-log', async (req, res) => {
-    const { food, quantity ,email} = req.body;
+    const { food, quantity, email } = req.body;
     const foodItem = foodData[0].Sheet1.find(item => item.Food.toLowerCase() === food.toLowerCase());
 
     if (foodItem) {
-        const totalCalories = (foodItem.Calories * quantity)/foodItem.Serving;
-        try{
+        const totalCalories = (foodItem.Calories * quantity) / foodItem.Serving;
+        try {
             const client = await pool.connect();
-            const query = 'SELECT id FROM users WHERE username = $1';
+            const query = 'SELECT user_id FROM users WHERE username = $1';
             const value = [email];
-            const result = await client.query(query,value);
+            const result = await client.query(query, value);
             if (result.rows.length > 0) {
-                const userId = result.rows[0].id;
+                const userId = result.rows[0].user_id;
+                // inserting into food_log table 
                 const insertQuery = 'INSERT INTO food_log (user_id, food_name, quantity, calories, log_date) VALUES ($1, $2, $3, $4, $5)';
                 const date = new Date().toISOString().split('T')[0];
                 await client.query(insertQuery, [userId, food, quantity, totalCalories, date]);
+
+                //inserting into daily_log table
+                const getCalorieQuery = 'SELECT calories from daily_log WHERE user_id = $1 AND log_date = $2';
+                const calorieResult = await client.query(getCalorieQuery, [userId, date]);
+                if (calorieResult.rows.length > 0) {
+                    const calories = calorieResult.rows[0].calories + totalCalories;
+                    const updateQuery = 'UPDATE daily_log SET calories = $1 WHERE user_id = $2 AND log_date = $3';
+                    await client.query(updateQuery, [calories, userId, date]);
+                }
+                else{
+                    const insertCalorieQuery = 'INSERT INTO daily_log (user_id,calories,log_date) VALUES ($1,$2,$3)';
+                    await client.query(insertCalorieQuery, [userId, totalCalories, date]);
+                }
                 res.json({ food, quantity, totalCalories });
             } else {
                 res.status(404).json({ error: "User not found" });
             }
             client.release();
         }
-        catch(error){
+        catch (error) {
             console.error('Error saving food log:', error);
             res.status(500).json({ error: "Internal server error" });
         }
@@ -58,29 +144,58 @@ app.post('/calorie-log', async (req, res) => {
 });
 
 app.get('/calorie-log', async (req, res) => {
+    const { email } = req.query;
+    try {
+        const client = await pool.connect();
+        const query = 'SELECT user_id FROM users WHERE username = $1';
+        const value = [email];
+        const result = await client.query(query, value);
+        if (result.rows.length > 0) {
+            const userId = result.rows[0].user_id;
+            const selectQuery = 'SELECT * FROM food_log WHERE log_date = $1 AND user_id = $2';
+            const date = new Date().toISOString().split('T')[0];
+            const result2 = await client.query(selectQuery, [date, userId]);
+            console.log(result2.rows);
+            res.status(200).json(result2.rows);
+        } else {
+            res.status(404).json({ error: "User not found" });
+        }
+        client.release();
+    }
+    catch (error) {
+        console.error('Error saving food log:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+
+});
+
+app.get('/total_calories', async(req, res) => {
     const {email} = req.query;
-        try{
-            const client = await pool.connect();
-            const query = 'SELECT id FROM users WHERE username = $1';
-            const value = [email];
-            const result = await client.query(query,value);
-            if (result.rows.length > 0) {
-                const userId = result.rows[0].id;
-                const selectQuery = 'SELECT * FROM food_log WHERE log_date = $1 AND user_id = $2';
-                const date = new Date().toISOString().split('T')[0];
-                const result2 = await client.query(selectQuery, [date, userId]);
-                console.log(result2.rows);
-                res.status(200).json(result2.rows);
+    try {
+        const client = await pool.connect();
+        const query = 'SELECT user_id FROM users WHERE username = $1';
+        const value = [email];
+        const result = await client.query(query, value);
+        if (result.rows.length > 0) {
+            const userId = result.rows[0].user_id;
+            const selectQuery = 'SELECT calories FROM daily_log WHERE log_date = $1 AND user_id = $2';
+            const date = new Date().toISOString().split('T')[0];
+            const result2 = await client.query(selectQuery, [date, userId]);
+            if (result2.rows.length > 0) {
+                const totalCalories = result2.rows[0].calories;
+                res.status(200).json(totalCalories); // Returning only the calorie value
             } else {
-                res.status(404).json({ error: "User not found" });
+                res.status(200).json(0); // No calories logged for today, returning 0
             }
-            client.release();
+        } else {
+            res.status(404).json({ error: "User not found" });
         }
-        catch(error){
-            console.error('Error saving food log:', error);
-            res.status(500).json({ error: "Internal server error" });
-        }
-   
+        client.release();
+    }
+    catch (error) {
+        console.error('Error saving daily_log:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 app.post('/calorie-log-similar-foods', (req, res) => {
@@ -94,7 +209,7 @@ app.post('/calorie-log-similar-foods', (req, res) => {
 });
 
 // Sign up 
-app.post('/api/signup', async (req , res) => {
+app.post('/api/signup', async (req, res) => {
     let data = req.body;
     console.log('Data received:', data);
     try {
@@ -124,9 +239,9 @@ app.post('/api/signup', async (req , res) => {
 });
 
 // Log In
-app.post('/api/login', async(req,res) => {
-    let data=req.data;
-    try{
+app.post('/api/login', async (req, res) => {
+    let data = req.data;
+    try {
         const client = await pool.connect();
         const query = 'SELECT * FROM users WHERE username = $1';
         const value = req.body['email'];
