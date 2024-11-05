@@ -30,13 +30,13 @@ function Dashboard() {
     const renderFeatureContent = () => {
         switch (activeFeature) {
             case 'daily-goals':
-                return <DailyGoal />;
+                return <DailyGoal getEmailFromToken={getEmailFromToken}/>;
             case 'calorie-log':
                 return <CalorieLog getEmailFromToken={getEmailFromToken}/>;
             case 'workout':
-                return <Workout />;
+                return <Workout getEmailFromToken={getEmailFromToken}/>;
             case 'meal-plans':
-                return <Mealplan />;
+                return <Mealplan getEmailFromToken={getEmailFromToken}/>;
             case 'progress-tracker':
                 return <ProgressTracker />;
             default:

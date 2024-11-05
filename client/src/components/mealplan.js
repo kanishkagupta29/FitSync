@@ -1,26 +1,8 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
 import '../styles/mealplan.css';
-import { jwtDecode } from "jwt-decode";
-function Mealplan() {
+function Mealplan({getEmailFromToken}) {
     const [goalweight,setgoalweight]=useState("");
-    function getEmailFromToken() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.log("no token");
-            return null;
-        }
-    
-        try {
-            console.log("token",token);
-          const decodedToken = jwtDecode(token);
-          return decodedToken.email;
-        } catch (error) {
-          console.error('Failed to decode token:', error);
-          return null;
-        }
-    }
-
 
     useEffect(() => {
         async function fetchGoal() {
