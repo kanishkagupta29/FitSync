@@ -3,7 +3,7 @@ import "../styles/workout.css";
 import exerciseData from "../data/exercise.json";
 
 function Workout() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [timer, setTimer] = useState(45);
   const [isComplete, setIsComplete] = useState(false);
@@ -44,11 +44,21 @@ function Workout() {
   }, [timer, isPlaying, isComplete]);
 
   const handleRepeat = () => {
-    setCurrentVideoIndex(1);
+    setCurrentVideoIndex(0);
     setIsPlaying(true);
     setTimer(45);
     setRepeatCount(0);
     setIsComplete(false);
+  };
+
+  const handlePrev=()=>{
+    setCurrentVideoIndex((prevIndex)=>
+      prevIndex===0?exerciseData.length-1:prevIndex-1
+    );
+  };
+
+  const handleNext=()=>{
+    setCurrentVideoIndex((prevIndex)=>(prevIndex+1)%exerciseData.length)
   };
 
   const currentExercise = exerciseData[currentVideoIndex];
@@ -69,7 +79,12 @@ function Workout() {
             <p className="card-text"><b>Calories Burned:</b> {currentExercise['calories burned']}</p>
             <p className="timer">Time: {timer}s</p>
           </div>
-        </div>
+
+          <div className="button-handler">
+            <button onClick = {handlePrev} disabled = {currentVideoIndex === 0}>Prev</button>
+            <button onClick = {handleNext} disabled = {isComplete && currentVideoIndex===exerciseData.length-1}>Next</button>
+          </div>
+        </div>  
       ) : (
         <div className="card">
           <div className="video-placeholder"></div>
@@ -79,7 +94,7 @@ function Workout() {
           </div>
         </div>
       )}
-
+  
       {isComplete && (
         <button onClick={handleRepeat} className="repeat-button">
           Repeat Exercises

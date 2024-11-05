@@ -79,7 +79,10 @@
     font-weight: bold;
     margin-top: 10px;
 }
-
+.button-handler{
+    display: flex;
+    justify-content: space-between;
+}
 .video-placeholder {
     display: flex;
     justify-content: center;
