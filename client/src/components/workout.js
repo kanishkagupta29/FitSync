@@ -13,7 +13,7 @@ function Workout({ getEmailFromToken }) {
   let maxRepeats = 3;
   let calories_burned = 41;
   const [goalweight, setgoalweight] = useState("");
-  
+
   useEffect(() => {
     async function fetchGoal() {
       const email = getEmailFromToken();
@@ -52,8 +52,23 @@ function Workout({ getEmailFromToken }) {
   }
   calories_burned = calories_burned * maxRepeats;
   const [timer, setTimer] = useState(playtime);
-
   useEffect(() => {
+    const sendCalorieData = async () => {
+      if (isComplete) {
+        try {
+          await axios.post('http://localhost:5000/workout-calorie', {
+            calories_burned,
+            email: getEmailFromToken()
+          });
+        } catch (error) {
+          console.error('Error sending workout calorie data:', error);
+        }
+      }
+    };
+    sendCalorieData();
+  }, [isComplete]);
+  useEffect(() => {
+  
     if (isComplete || !hasStarted || showEndPage) return;
 
     if (timer > 0) {

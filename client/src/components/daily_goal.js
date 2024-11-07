@@ -10,7 +10,6 @@ function DailyGoal({ getEmailFromToken }) {
 
     useEffect(() => {
         fetchCalories();
-        fetchLocalCalories();
     }, []);
 
     async function fetchCalories() {
@@ -19,17 +18,11 @@ function DailyGoal({ getEmailFromToken }) {
             const result = await axios.get(`http://localhost:5000/total_calories?email=${email}`);
             if (result.status === 200) {
                 console.log("Backend calories:", result.data);
-                setTotalCalories(prevCalories => prevCalories + result.data);
+                setTotalCalories(1200 - result.data);
             }
         } catch (error) {
             console.log(error);
         }
-    }
-
-    function fetchLocalCalories() {
-        const localCalories = parseInt(localStorage.getItem("dailyCalories")) || 0;
-        console.log("Local storage calories:", localCalories);
-        setTotalCalories(prevCalories => prevCalories + localCalories);
     }
 
     function handleCompleteMeals() {
@@ -64,9 +57,17 @@ function DailyGoal({ getEmailFromToken }) {
                 <div className="message">{message}</div>
             </div>
             <div className="calories-card">
-                <h3>Total Calories Burned Today</h3>
-                <div className="calories-amount">{totalCalories} kcal</div>
+                <p>You have</p>
+                <br></br>
+                <span className="calorie-value">{Math.abs(totalCalories)} cal</span>
+                <br></br>
+                {totalCalories >= 0 ? (
+                    <p>remaining calories</p>
+                ) : (
+                    <p>extra calories consumed</p>
+                )}
             </div>
+
         </div>
     );
 }
