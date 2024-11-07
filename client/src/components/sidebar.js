@@ -10,8 +10,17 @@ const Sidebar = ({ setActiveFeature }) => {
         setIsOpen(!isOpen);
     };
 
-    useEffect(() => {
+    const closeSidebar = () => {
         setIsOpen(false);
+    };
+
+    const handleFeatureChange = (feature) => {
+        setActiveFeature(feature);
+        closeSidebar();  // Close the sidebar after selecting a feature
+    };
+
+    useEffect(() => {
+        setIsOpen(false); // Close sidebar when the route changes
     }, [location]);
 
     return (
@@ -23,19 +32,19 @@ const Sidebar = ({ setActiveFeature }) => {
                 <button className="close-btn" onClick={toggleSidebar}>×</button>
                 <ul>
                     <li><a><h2>Hello buddy</h2></a></li>
-                    <li onClick={() => setActiveFeature('daily-goals')}>
+                    <li onClick={() => handleFeatureChange('daily-goals')}>
                         Daily goals
                     </li>
-                    <li onClick={() => setActiveFeature('calorie-log')}>
+                    <li onClick={() => handleFeatureChange('calorie-log')}>
                         Calorie Log
                     </li>
-                    <li onClick={() => setActiveFeature('workout')}>
+                    <li onClick={() => handleFeatureChange('workout')}>
                         Workout Hub
                     </li>
-                    <li onClick={() => setActiveFeature('meal-plans')}>
+                    <li onClick={() => handleFeatureChange('meal-plans')}>
                         Meal Plans
                     </li>
-                    <li onClick={() => setActiveFeature('progress-tracker')}>
+                    <li onClick={() => handleFeatureChange('progress-tracker')}>
                         Progress Tracker
                     </li>
                 </ul>

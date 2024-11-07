@@ -72,3 +72,30 @@
     padding: 10px;
     width: 100%;  
 }
+
+.calories-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 40vw;
+    margin-top: 20px;
+    min-height: 200px;
+    flex-grow: 1;
+}
+
+.calories-card h3 {
+    font-size: 1.4rem;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.calories-card .calories-amount {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+}
