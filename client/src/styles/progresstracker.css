@@ -1,177 +1,117 @@
-
-/* Style the container holding the calendar */
-.result-calendar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f9f9f9; /* Light background for a clean look */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    max-width: 400px; /* Limit the width */
-    margin: 30px auto; /* Center the component */
-  }
-  
-  /* Style the Calendar itself */
-  .react-calendar {
-    border: none; /* Remove default border */
-    border-radius: 10px;
-    font-family: 'Arial', sans-serif;
-    background-color: white;
-  }
-  
-  .react-calendar__tile {
-    padding: 15px; /* More padding for a spacious feel */
-    font-weight: bold;
-    color: #333; /* Dark text color */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s ease;
-  }
-  
-  .react-calendar__tile--active {
-    background-color: #4caf50; /* Green for selected date */
-    color: white;
-  }
-  
-  .react-calendar__tile:hover {
-    background-color: #e8f5e9; /* Light green on hover */
-    cursor: pointer;
-  }
-  
-  .react-calendar__navigation button {
-    color: #4caf50; /* Green navigation buttons */
-    min-width: 44px;
-    background: none;
-    font-size: 16px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .react-calendar__month-view__days__day--weekend {
-    color: #ff5722; /* Highlight weekends with a different color */
-  }
-  
-  /* Style the calendar to be centered and take full page height */
-.result-calendar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-  position: relative;
-}
-
-/* Style for the pop-up calorie details */
-.calorie-details {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-/* Inner container for the calorie details */
-.calorie-details > div {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Close button styling */
-.close-btn {
-  background-color: #ff4c4c;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.close-btn:hover {
-  background-color: #ff1c1c;
-}
-
-/* Adjusting the Calendar to take a fixed height */
-.react-calendar {
-  width: 90%;
-  max-width: 400px;
-  margin: 20px 0;
-}
-/* Overall page styling to give a colorful, healthy diet theme */
+/* General styling for the full-page, colorful, and healthy diet-themed interface */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
   background-color: #fffbf2; /* Light, warm background color */
   color: #333;
+  height: 100vh;
+  overflow: hidden;
 }
 
+/* Main container for the progress tracker page */
 .result-calendar {
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: space-between;
   height: 100vh;
-  padding: 20px;
+  width: 100vw; /* Cover the entire width of the viewport */
+  padding: 40px;
   background-image: linear-gradient(135deg, #ffecd2, #fcb69f); /* Gradient background */
   box-sizing: border-box;
+  position: relative;
+  z-index: 0;
 }
 
-/* Styling the calendar on the left */
+/* Styling the calendar on the left side */
 .react-calendar {
-  width: 300px;
+  width: 350px;
   border: 2px solid #f77e67;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
-  margin-right: 40px; /* Space between calendar and pop-up */
+  margin-right: 50px; /* Space between the calendar and the pop-up */
+  color: #333; /* Text color for better readability */
+  z-index: -2;
+  position: relative;
 }
 
-/* Style for the pop-up on the right */
+.react-calendar__tile {
+  font-weight: bold;
+  color: #555; /* Darker color for date numbers */
+  border-radius: 5px; /* Rounded corners for tiles */
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__tile--active {
+  background-color: #4caf50; /* Green for selected date */
+  color: #fff; /* White text for contrast */
+}
+
+.react-calendar__tile:hover {
+  background-color: #e8f5e9; /* Light green on hover */
+  cursor: pointer;
+}
+
+.react-calendar__navigation button {
+  color: #4caf50; /* Green navigation buttons */
+  background: none;
+  font-size: 16px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #ff5722; /* Orange for weekends */
+}
+
+/* Pop-up container on the right side */
 .calorie-details {
   flex: 1;
   display: flex;
+  flex-direction: column; /* Stack pop-ups vertically */
   align-items: center;
   justify-content: center;
   height: 100%;
   position: relative;
-  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white background */
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  max-width: 800px; /* Larger pop-up width */
   animation: fadeIn 0.3s ease-in-out; /* Add a fade-in animation */
 }
 
-/* Pop-up inner content */
+/* Inner content of the main calorie details pop-up */
 .calorie-details > div {
   background-color: #fffbf2; /* Match the light background theme */
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 15px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Space between pop-ups */
 }
 
+/* Secondary pop-up for today's calorie log */
+.todays-log {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Close button styling */
 .close-btn {
   background-color: #ff6b6b;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px;
   margin-top: 20px;
   transition: background-color 0.3s;
 }
@@ -189,5 +129,95 @@ body {
   to {
       opacity: 1;
       transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+  .result-calendar {
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      height: auto;
+      overflow-y: auto; /* Allow scrolling for smaller screens */
+  }
+
+  .react-calendar {
+      margin-bottom: 30px;
+      margin-right: 0;
+  }
+
+  .calorie-details {
+      max-width: 90%;
+      padding: 20px;
+  }
+}
+/* Styling for the "You earned a coin!" message */
+.earned-coin-message {
+  background-color: #ffd700; /* Gold color to represent the coin */
+  color: #fff; /* White text for contrast */
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px 30px;
+  border-radius: 12px;
+  margin-top: 30px;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Shadow for emphasis */
+  animation: popUp 0.6s ease-in-out, shake 0.4s ease-in-out 1.5s; /*Adding pop-up and shake animations*/
+  transform: scale(1.1); /* Slightly enlarge when appearing */
+}
+
+/* Pop-up effect to make the message appear */
+@keyframes popUp {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Shake effect for extra fun */
+@keyframes shake {
+  0% {
+    transform: translateX(-10px);
+  }
+  25% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Optional: Add a subtle sparkle effect */
+.earned-coin-message::before {
+  content: "💰";
+  font-size: 40px;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* animation: sparkle 1s infinite; */
+}
+
+/* Sparkle animation for coin icon */
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

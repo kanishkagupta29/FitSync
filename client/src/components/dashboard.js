@@ -38,7 +38,7 @@ function Dashboard() {
             case 'meal-plans':
                 return <Mealplan getEmailFromToken={getEmailFromToken}/>;
             case 'progress-tracker':
-                return <ProgressTracker />;
+                return <ProgressTracker getEmailFromToken={getEmailFromToken}/>;
             default:
                 return null;
         }
