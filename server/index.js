@@ -5,7 +5,13 @@ import pg from "pg";
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
+import axios from 'axios';
 import cron from "node-cron";
+// const express = require('express');
+// const axios = require('axios');
+// const router = express.Router();
+
+const VULTR_API_KEY = process.env.VULTR_API_KEY;
 dotenv.config();
 
 const app = express();
@@ -35,6 +41,37 @@ cron.schedule("0 0 * * *", async () => {
         console.error("Error resetting food log table:", error);
     }
 });
+
+app.post('/chat', async (req, res) => {
+    const { message } = req.body;
+    console.log("---->user message",message);
+    try {
+      const response = await axios.post(
+        'https://api.vultrinference.com/v1/chat/completions/RAG',
+        {
+          collection: 'fitsync',
+          model: 'llama2-7b-chat-Q5_K_M',
+          messages: [{ role: 'user', content: message }],
+          max_tokens: 512,
+          temperature: 0.8,
+          top_k: 40,
+          top_p: 0.9
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${process.env.VULTR_API_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      const chatbotResponse = response.data.choices[0].message.content;
+     console.log("-->c",chatbotResponse);
+    res.json({ response: chatbotResponse });
+    } catch (error) {
+      console.error('Error communicating with Vultr API:', error);
+      res.status(500).send('Error generating chatbot response');
+    }
+  });
 app.post('/water_intake', async (req, res) => {
     const { email, glasses } = req.body;  // Updated to use req.body instead of req.query
     const date = new Date().toISOString().split('T')[0];

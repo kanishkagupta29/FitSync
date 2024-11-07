@@ -10,7 +10,7 @@ import Workout from './components/workout';
 import ProgressTracker from './components/progress_tracker';
 import CalorieLog from './components/calorieLog';
 import Personalinfo from './components/personalinfo' ;
-
+import Chatbot from './components/chatbot';
 function App() {
   return (
     <Router>
@@ -21,6 +21,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/personalinfo" element={<Personalinfo/>} />
+        <Route path='/chatbot' element={<Chatbot/>} />
+
       </Routes>
     </Router>
   );
