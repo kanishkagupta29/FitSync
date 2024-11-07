@@ -10,6 +10,7 @@ function DailyGoal({ getEmailFromToken }) {
 
     useEffect(() => {
         fetchCalories();
+        fetchLocalCalories();
     }, []);
 
     async function fetchCalories() {
@@ -17,12 +18,18 @@ function DailyGoal({ getEmailFromToken }) {
         try {
             const result = await axios.get(`http://localhost:5000/total_calories?email=${email}`);
             if (result.status === 200) {
-                console.log(result.data);
-                setTotalCalories(result.data);
+                console.log("Backend calories:", result.data);
+                setTotalCalories(prevCalories => prevCalories + result.data);
             }
         } catch (error) {
             console.log(error);
         }
+    }
+
+    function fetchLocalCalories() {
+        const localCalories = parseInt(localStorage.getItem("dailyCalories")) || 0;
+        console.log("Local storage calories:", localCalories);
+        setTotalCalories(prevCalories => prevCalories + localCalories);
     }
 
     function handleCompleteMeals() {
@@ -34,7 +41,7 @@ function DailyGoal({ getEmailFromToken }) {
         } else {
             newMessage = "You’ve slightly exceeded your calorie goal today. No worries! Consider lighter choices tomorrow to balance it out.";
         }
-        if (newMessage != '') {
+        if (newMessage !== '') {
             setMessage(newMessage);
             setButtonDisabled(true);
         }
@@ -55,6 +62,10 @@ function DailyGoal({ getEmailFromToken }) {
                     Yes, I have had!
                 </button>
                 <div className="message">{message}</div>
+            </div>
+            <div className="calories-card">
+                <h3>Total Calories Burned Today</h3>
+                <div className="calories-amount">{totalCalories} kcal</div>
             </div>
         </div>
     );
