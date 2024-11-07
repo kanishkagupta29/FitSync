@@ -277,6 +277,41 @@ app.get('/daily-log', async (req, res) => {
 });
 
 
+app.post('/workout-calorie', async (req, res) => {
+    const { calories_burned, email } = req.body;
+        try {
+            const client = await pool.connect();
+            const query = 'SELECT user_id FROM users WHERE username = $1';
+            const value = [email];
+            const result = await client.query(query, value);
+            if (result.rows.length > 0) {
+                const userId = result.rows[0].user_id;
+                const date = new Date().toISOString().split('T')[0];
+                const getCalorieQuery = 'SELECT calories from daily_log WHERE user_id = $1 AND log_date = $2';
+                const calorieResult = await client.query(getCalorieQuery, [userId, date]);
+                if (calorieResult.rows.length > 0) {
+                    const calories = calorieResult.rows[0].calories - calories_burned;
+                    const updateQuery = 'UPDATE daily_log SET calories = $1 WHERE user_id = $2 AND log_date = $3';
+                    await client.query(updateQuery, [calories, userId, date]);
+                }
+                else{
+                    calories_burned *= -1;
+                    const insertCalorieQuery = 'INSERT INTO daily_log (user_id,calories,log_date) VALUES ($1,$2,$3)';
+                    await client.query(insertCalorieQuery, [userId, calories_burned, date]);
+                }
+                res.status(200);
+            } else {
+                res.status(404).json({ error: "User not found" });
+            }
+            client.release();
+        }
+        catch (error) {
+            console.error('error saving calories burned by workout:', error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+);
+
 // Sign up 
 app.post('/api/signup', async (req, res) => {
     let data = req.body;
