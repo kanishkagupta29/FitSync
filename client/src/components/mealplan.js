@@ -491,11 +491,11 @@ if (goal && goal[0].goal === "lose weight") {
 
 return (
     <section className="meal-plan">
-        <h3>Your goal is: {goal[0]?.goal}</h3>
-        <h5>Suggested meal plan according to your goal:</h5>
+        <h3 className="heading">Your Goal Is: {goal[0]?.goal}</h3>
+        <h5 className="heading">Suggested meal plan according to your goal:</h5>
         {mealPlan && mealPlan.map((dayPlan, index) => (
             <div key={index} className="day-plan">
-                <h6>{dayPlan.day}</h6>
+                <h6 className="day">{dayPlan.day}</h6>
                 <div className="meals">
                     <div className="meal">
                         <strong>Breakfast Options:</strong>

@@ -207,6 +207,38 @@ app.post('/calorie-log-similar-foods', (req, res) => {
         res.status(404).json({ error: "Food item not found" });
     }
 });
+app.get('/daily-log', async (req, res) => {
+    const { email, date } = req.query; // Accept date as a query parameter
+    console.log("email-->",email);
+    console.log("date-->",date);
+    try {
+        const client = await pool.connect();
+
+        // Query to fetch the user ID based on the provided email
+        const query = 'SELECT user_id FROM users WHERE username = $1'; // Corrected from 'username' to 'email'
+        const value = [email];
+        const result = await client.query(query, value);
+
+        if (result.rows.length > 0) {
+            const userId = result.rows[0].user_id;
+
+            // Query to fetch the daily log for the specified date and user ID
+            const selectQuery = 'SELECT * FROM daily_log WHERE log_date = $1 AND user_id = $2';
+            const result2 = await client.query(selectQuery, [date, userId]); // Use provided date
+
+            console.log(result2);
+            res.status(200).json(result2.rows);
+        } else {
+            res.status(404).json({ error: "User not found" });
+        }
+
+        client.release();
+    } catch (error) {
+        console.error('Error fetching daily log:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 
 // Sign up 
 app.post('/api/signup', async (req, res) => {
