@@ -42,15 +42,15 @@ function Home() {
                 <div className="benefit-cards">
                     <div className="benefit-card">
                         <h3>Calorie tracking</h3>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, eius?</p>
+                        <p>Effortlessly track your calories to stay on top of your nutrition goals and maintain a balanced lifestyle</p>
                     </div>
                     <div className="benefit-card">
                         <h3>Personalised exercise plans</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p>Get tailored exercise routines that align with your fitness goals, helping you stay active and motivated</p>
                     </div>
                     <div className="benefit-card">
-                        <h3>personalized diet plans</h3>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <h3>Personalized diet plans</h3>
+                        <p>Receive customized diet plans that suit your preferences and help you achieve your health and fitness objectives</p>
                     </div>
                 </div>
             </section>
