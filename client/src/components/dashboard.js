@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import DailyGoal from "./daily_goal";
 import Workout from "./workout";
 import Chatbot from "./chatbot";
-// import MealPlan from "./meal_plan";
 import ProgressTracker from "./progress_tracker";
 
 function Dashboard() {

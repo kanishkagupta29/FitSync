@@ -46,7 +46,7 @@
     padding: 12px 24px;
     font-size: 1.1rem;
     color: #fff;
-    background-color: #007bff;
+    background-color: #006769;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -60,7 +60,7 @@
 }
 
 .complete-meals:hover:not(:disabled) {
-    background-color: #0056b3;
+    background-color: #50C878;
     transform: translateY(-2px);  
 }
 
@@ -95,6 +95,6 @@
 }
 
 .calorie-value {
-    color: #0056b3;
+    color: #006769;
     font-size: 34px;
 }
