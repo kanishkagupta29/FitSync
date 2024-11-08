@@ -39,11 +39,38 @@ function DailyGoal({ getEmailFromToken }) {
             setButtonDisabled(true);
         }
     }
-
     return (
-        <div className="daily-goal">
-            <div className="water-trackers">
-                <WaterTracker getEmailFromToken={getEmailFromToken} />
+        <div className="daily-goal-page">
+            <div className="profile-today">
+                <i className="fa-solid fa-user profile-icon"></i>
+                <span className="today-label">Today</span>
+            </div>
+            <div className="main-content">
+               
+            <div className="calories-card">
+    <h2>Calories</h2>
+    <div className="calorie-details-horizontal">
+        <div className="calorie-stats">
+            <p><strong>Base Goal:</strong> 2000 cal</p> {/* Example value, replace as needed */}
+            <p><strong>Food:</strong> {totalCalories} cal</p> {/* Replace with actual food value */}
+            <p><strong>Exercise:</strong> -500 cal</p> {/* Example value, replace as needed */}
+        </div>
+        <div className="calorie-summary">
+            <p>You have</p>
+            <span className="calorie-value">{Math.abs(totalCalories)} cal</span>
+            {totalCalories >= 0 ? (
+                <p>remaining calories</p>
+            ) : (
+                <p>extra calories consumed</p>
+            )}
+        </div>
+    </div>
+</div>
+
+
+                <div className="water-card">
+                    <WaterTracker getEmailFromToken={getEmailFromToken} />
+                </div>
             </div>
             <div className="suggestion-box">
                 <h3>Have you had all your meals today?</h3>
@@ -56,20 +83,9 @@ function DailyGoal({ getEmailFromToken }) {
                 </button>
                 <div className="message">{message}</div>
             </div>
-            <div className="calories-card">
-                <p>You have</p>
-                <br></br>
-                <span className="calorie-value">{Math.abs(totalCalories)} cal</span>
-                <br></br>
-                {totalCalories >= 0 ? (
-                    <p>remaining calories</p>
-                ) : (
-                    <p>extra calories consumed</p>
-                )}
-            </div>
-
         </div>
     );
+
 }
 
 export default DailyGoal;
