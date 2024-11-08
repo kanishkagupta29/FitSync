@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "../styles/chatbot.css";
 import axios from 'axios';
 
 const Chatbot = () => {
@@ -38,6 +39,7 @@ const Chatbot = () => {
           <strong>You:</strong> {userMessage}
         </div>
         <div className="chatbot-message">
+          <br></br>
           <strong>Chatbot:</strong> {chatbotResponse}
         </div>
       </div>

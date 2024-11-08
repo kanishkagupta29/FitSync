@@ -7,11 +7,13 @@ import Mealplan from "./mealplan";
 import { useNavigate } from "react-router-dom";
 import DailyGoal from "./daily_goal";
 import Workout from "./workout";
+import Chatbot from "./chatbot";
 // import MealPlan from "./meal_plan";
 import ProgressTracker from "./progress_tracker";
 
 function Dashboard() {
     const [activeFeature, setActiveFeature] = useState('daily-goals');
+    const [isChatbotOpen, setIsChatbotOpen] = useState(false);
     const navigate = useNavigate();
     function getEmailFromToken() {
         const token = localStorage.getItem('token');
@@ -55,6 +57,18 @@ function Dashboard() {
             <div className="dashboard-content">
                 {renderFeatureContent()}
             </div>
+            {/* Chatbot icon to open the popup */}
+            <div className="chatbot-icon" onClick={() => setIsChatbotOpen(!isChatbotOpen)}>
+                <i className="fa-solid fa-comment-dots"></i>
+            </div>
+
+            {/* Conditionally render the Chatbot popup */}
+            {isChatbotOpen && (
+                <div className="chatbot-popup">
+                    <Chatbot />
+                    <button onClick={() => setIsChatbotOpen(false)} className="close-chatbot">X</button>
+                </div>
+            )}
         </div>
     );
 }

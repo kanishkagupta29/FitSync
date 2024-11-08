@@ -1,5 +1,5 @@
 /* General styling for the full-page, colorful, and healthy diet-themed interface */
-body {
+.progress-tracker-div {
   margin: 0;
   font-family: 'Arial', sans-serif;
   background-color: #fffbf2; /* Light, warm background color */
@@ -18,8 +18,6 @@ body {
   padding: 40px;
   background-image: linear-gradient(135deg, #ffecd2, #fcb69f); /* Gradient background */
   box-sizing: border-box;
-  position: relative;
-  z-index: 0;
 }
 
 /* Styling the calendar on the left side */
@@ -31,8 +29,6 @@ body {
   background-color: #ffffff;
   margin-right: 50px; /* Space between the calendar and the pop-up */
   color: #333; /* Text color for better readability */
-  z-index: -2;
-  position: relative;
 }
 
 .react-calendar__tile {
