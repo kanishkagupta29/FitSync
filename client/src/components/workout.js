@@ -68,7 +68,7 @@ function Workout({ getEmailFromToken }) {
     sendCalorieData();
   }, [isComplete]);
   useEffect(() => {
-  
+
     if (isComplete || !hasStarted || showEndPage) return;
 
     if (timer > 0) {
@@ -121,7 +121,21 @@ function Workout({ getEmailFromToken }) {
   };
 
   const handleNext = () => {
-    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % exerciseData.length);
+    setTimer(playtime);
+    setCurrentVideoIndex((prevIndex) => {
+      const newIndex = (prevIndex + 1) % exerciseData.length;
+      if (newIndex === 0) {
+        setRepeatCount((prevCount) => {
+          const newCount = prevCount + 1;
+          if (newCount >= maxRepeats) {
+            setIsComplete(true);
+            setShowEndPage(true); // Show the end page once the workout is complete
+          }
+          return newCount;
+        });
+      }
+      return newIndex;
+    });
   };
 
   const currentExercise = exerciseData[currentVideoIndex];
