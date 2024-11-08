@@ -15,16 +15,16 @@ function Dashboard() {
     const [activeFeature, setActiveFeature] = useState('daily-goals');
     const [isChatbotOpen, setIsChatbotOpen] = useState(false);
     const navigate = useNavigate();
+    
     function getEmailFromToken() {
         const token = localStorage.getItem('token');
         if (!token) return null;
-    
         try {
-          const decodedToken = jwtDecode(token);
-          return decodedToken.email;
+            const decodedToken = jwtDecode(token);
+            return decodedToken.email;
         } catch (error) {
-          console.error('Failed to decode token:', error);
-          return null;
+            console.error('Failed to decode token:', error);
+            return null;
         }
     }
 
@@ -32,28 +32,39 @@ function Dashboard() {
     const renderFeatureContent = () => {
         switch (activeFeature) {
             case 'daily-goals':
-                return <DailyGoal getEmailFromToken={getEmailFromToken}/>;
+                return <DailyGoal getEmailFromToken={getEmailFromToken} />;
             case 'calorie-log':
-                return <CalorieLog getEmailFromToken={getEmailFromToken}/>;
+                return <CalorieLog getEmailFromToken={getEmailFromToken} />;
             case 'workout':
-                return <Workout getEmailFromToken={getEmailFromToken}/>;
+                return <Workout getEmailFromToken={getEmailFromToken} />;
             case 'meal-plans':
-                return <Mealplan getEmailFromToken={getEmailFromToken}/>;
+                return <Mealplan getEmailFromToken={getEmailFromToken} />;
             case 'progress-tracker':
-                return <ProgressTracker getEmailFromToken={getEmailFromToken}/>;
+                return <ProgressTracker getEmailFromToken={getEmailFromToken} />;
             default:
                 return null;
         }
     };
 
     return (
-        <div>
-            {/* <Mealplan getEmailFromToken={getEmailFromToken}/> */}
+        <div className="dashboard-page">
             <div className="dashboard-header">
                 <Sidebar setActiveFeature={setActiveFeature} />
-                <div className='dash-logo'>FitSync</div>
+                {/* Logo Section */}
+                <div className="dash-logo-container">
+                    <img src="https://images.crunchbase.com/image/upload/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1/haalxf8hs7fk9m41uwnu" alt="FitSync Logo" className="fitsync-logo" />
+                    <div className='dash-logo'>FitSync</div>
+                </div>
+                {/* Navigation Links */}
+                <div className="nav-links">
+                    <a href="/about-us" className="nav-link">About Us</a>
+                    <a href="/contact" className="nav-link">Contact</a>
+                    <a href="/help" className="nav-link">Help</a>
+                    <a href="/settings" className="nav-link">Settings</a>
+                </div>
                 <a href="/dashboard"><i className="fa-solid fa-user profile-logo"></i></a>
             </div>
+            <div style={{height:'15px',backgroundColor:'#40A578'} }></div>
             <div className="dashboard-content">
                 {renderFeatureContent()}
             </div>

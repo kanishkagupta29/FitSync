@@ -3,7 +3,7 @@
     margin: 20px;
     padding: 30px;
     /* background-color: #e8f5e9; Light green background */
-    background-color: #388e3c;
+    background-color: #9DDE8B;
     border-radius: 10px;
     text-align: center; /* Center content */
     /* gap: 20px; */
@@ -25,7 +25,8 @@
 }
 .heading{
     margin-bottom: 3px;
-    color: white;
+    color: black;
+    /* padding-top: 1px; */
 }
 .meal {
     flex: 1 1 45%;
