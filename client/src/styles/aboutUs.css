@@ -1,0 +1,76 @@
+/* General Container */
+.about-container {
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* Header */
+  .about-header {
+    margin-bottom: 2rem;
+  }
+  
+  .about-header h1 {
+    font-size: 2.5rem;
+    color: #006769;
+  }
+  
+  .about-header p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  
+  /* Mission, Vision, and Values Sections */
+  .mission-section, .vision-section, .values-section {
+    margin: 2rem 0;
+  }
+  
+  .mission-section h2, .vision-section h2, .values-section h2 {
+    font-size: 2rem;
+    color: #006769;
+    margin-bottom: 1rem;
+  }
+  
+  .mission-section p, .vision-section p, .values-section p, .values-section ul {
+    font-size: 1.1rem;
+    color: #444;
+    text-align: left;
+    margin: 0.5rem 0;
+  }
+  
+  .values-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .values-section li {
+    margin: 0.8rem 0;
+    color: #333;
+  }
+  
+  .values-section li strong {
+    color: #006769;
+    font-weight: bold;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 1rem;
+    }
+  
+    .about-header h1 {
+      font-size: 2rem;
+    }
+  
+    .mission-section h2, .vision-section h2, .values-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+  

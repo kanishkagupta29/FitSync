@@ -4,13 +4,9 @@ import Dashboard from './components/dashboard';
 import Home from './components/home';
 import SignUp from './components/signup';
 import LogIn from './components/login';
-import DailyGoal from './components/daily_goal';
-import MealPlan from './components/meal_plan';
-import Workout from './components/workout';
-import ProgressTracker from './components/progress_tracker';
-import CalorieLog from './components/calorieLog';
 import Personalinfo from './components/personalinfo' ;
 import Chatbot from './components/chatbot';
+import AboutUs from './components/aboutUs';
 function App() {
   return (
     <Router>
@@ -22,6 +18,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/personalinfo" element={<Personalinfo/>} />
         <Route path='/chatbot' element={<Chatbot/>} />
+        <Route path='/about-us' element={<AboutUs/>} />
 
       </Routes>
     </Router>
