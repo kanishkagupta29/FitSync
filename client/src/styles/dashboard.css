@@ -50,6 +50,50 @@
     margin-left: 25px;
 }
 
+.chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 24px;
+    background-color: #006769;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatbot-popup {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 15px;
+}
+
+.close-chatbot {
+    position: absolute;
+    top: -15px;
+    right: 5px;
+    background-color: red;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.close-chatbot:hover {
+    background-color: rgb(220, 2, 2);
+}
+
+
 .profile-logo:hover {
     color: rgb(108, 211, 216); /* Matches dash-logo color on hover */
 }

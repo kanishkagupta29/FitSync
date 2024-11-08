@@ -62,6 +62,7 @@ export default function Results({ getEmailFromToken }) {
   }
 
   return (
+    <div className='progress-tracker-div'>
     <div className="result-calendar">
       <Calendar locale="en-US" onChange={onChange} value={calDate} />
 
@@ -98,6 +99,7 @@ export default function Results({ getEmailFromToken }) {
           {checkIfEarnedCoin(todayLog.calories) && <p className='earned-coin-message' style={{ color: 'green' }}>You earned a coin!</p>}
         </div>
       )}
+    </div>
     </div>
   );
 }
