@@ -1,27 +1,61 @@
-.daily-goal {
+.daily-goal-page {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
     margin: 20px auto;
-    padding: 10vw;
-    padding-top: 20px;
+    padding: 20px;
 }
 
-/* .cards {
-    padding: 20px;
-    border: 1px solid #dcdcdc;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-} */
+.profile-today {
+    display: flex;
+    align-items: center; /* Aligns vertically in the center */
+    gap: 10px; /* Adds space between the icon and the text */
+    font-size: 24px; /* Adjusts font size for the text */
+    font-weight: bold; /* Makes the text bold */
+    margin-bottom: 20px; /* Adds space below the section */
+    justify-content: flex-start; /* Aligns items to the left */
+}
 
-.water-trackers {
-    margin-bottom: 0;
-    padding: 20px;
+.profile-icon {
+    font-size: 32px; /* Icon size */
+    color: #0056b3; /* Adjust color to fit the theme */
+    margin-left: 2px; /* Adjusts the left margin for the icon */
+}
+
+
+.today-label {
+    color: #444;
+}
+
+.main-content {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.water-card,.calories-card{
+    padding: 30px;
     border: 1px solid #dcdcdc;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 40vw;
+    width: 45vw;
+    max-width: 400px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 20vw;
+
+}
+
+.calorie-value {
+    color: #0056b3;
+    font-size: 34px;
 }
 
 .suggestion-box {
@@ -33,13 +67,9 @@
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 40vw;
-}
-
-.suggestion-box h3 {
-    font-size: 1.6rem;
-    color: #444;
-    margin-bottom: 15px;
+    width: 80vw;
+    max-width: 600px;
+    margin-top: 20px;
 }
 
 .complete-meals {
@@ -72,29 +102,38 @@
     padding: 10px;
     width: 100%;  
 }
-
 .calories-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 30px;
     border: 1px solid #dcdcdc;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 40vw;
-    margin-top: 20px;
-    min-height: 200px;
-    flex-grow: 1;
+    width: 45vw;
+    max-width: 500px;
 }
 
-.calories-card h3 {
-    font-size: 1.4rem;
-    color: #444;
-    margin-bottom: 10px;
+.calorie-details-horizontal {
+    display: flex;
+    justify-content: space-between; /* Distributes space evenly between children */
+    align-items: center; /* Vertically centers the content */
+    width: 100%;
+    margin-top: 30px;
+}
+
+.calorie-stats {
+    flex: 1;
+    padding-right: 20px; /* Adds spacing between stats and summary */
+}
+
+.calorie-summary {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .calorie-value {
     color: #0056b3;
     font-size: 34px;
+    margin: 10px 0;
 }
