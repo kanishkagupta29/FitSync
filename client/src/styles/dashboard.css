@@ -1,19 +1,63 @@
-.dashboard-header{
+.dashboard-header {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Distributes space between children */
+    padding: 0 12px;
+    background-color: #006769;
+}
+
+.dash-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between logo and text */
+    flex-grow: 1; /* Ensures it takes as much space as possible */
 }
 
 .dash-logo {
     font-family: "Allura", cursive;
-    font-size: 50px;
-    color: rgb(108, 211, 216);
-    margin-left:5vw;
+    font-size: 45px; /* Adjust size as necessary */
+    color: #50C878;
+    margin-left: 10px; /* Reduces left margin */
 }
 
-.profile-logo{
-    font-size: 40px;
+.nav-links {
+    display: flex;
+    gap: 50px; /* Adjusted gap for better spacing */
+    margin-left: auto; /* Pushes navigation links to the right */
+}
+
+.nav-link {
+    text-decoration: double;
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgb(172, 126, 201); /* Darker shade for hover effect */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.profile-logo {
+    font-size: 30px; /* Reduced size for balance */
     padding: 10px;
     text-decoration: none;
-    color: black;
-    margin-left:75vw;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-left: 25px;
+}
+
+.profile-logo:hover {
+    color: rgb(108, 211, 216); /* Matches dash-logo color on hover */
+}
+
+.fitsync-logo {
+    width: 40px; /* Adjusts logo size */
+    height: auto; /* Maintains aspect ratio */
+}
+.dashboard-page{
+    background-color: #E6F4F1;
 }
