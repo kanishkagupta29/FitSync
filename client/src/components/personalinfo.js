@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/personalinfo.css';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+import API_BASE_URL from '../apiconfig';
 
 function PersonalInfo() {
   const [form, setForm] = useState({
@@ -41,7 +42,7 @@ function PersonalInfo() {
     const email = getEmailFromToken();
     console.log('Email got -->', email);
     try {
-      const result = await axios.post(`http://localhost:5000/api/personalinfo?email=${email}`, {
+      const result = await axios.post(`${API_BASE_URL}/api/personalinfo?email=${email}`, {
         ...form,
         email,
       });

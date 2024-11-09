@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_BASE_URL from "../apiconfig";
 
 function LogIn() {
   const navigate = useNavigate()
@@ -16,7 +17,7 @@ function LogIn() {
   async function handleSubmit(e) {
     e.preventDefault();
     try{
-      const result = await axios.post('http://localhost:5000/api/login',form);
+      const result = await axios.post(`${API_BASE_URL}/api/login`,form);
       if(result.status === 200){
         localStorage.setItem('token', result.data.token);
         navigate('/dashboard');

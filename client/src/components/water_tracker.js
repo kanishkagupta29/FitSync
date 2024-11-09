@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/water_tracker.css";
+import API_BASE_URL from "../apiconfig";
 
 const WaterTracker = ({ getEmailFromToken }) => {
     const totalGlasses = 8;
@@ -17,7 +18,7 @@ const WaterTracker = ({ getEmailFromToken }) => {
 
             try {
                 const result = await axios.post(
-                    `http://localhost:5000/water_intake`,
+                    `${API_BASE_URL}/water_intake`,
                     {
                         email: email,
                         glasses: newGlassCount,
@@ -39,7 +40,7 @@ const WaterTracker = ({ getEmailFromToken }) => {
 
         try {
             const result = await axios.get(
-                `http://localhost:5000/water_intake?email=${email}`
+                `${API_BASE_URL}/water_intake?email=${email}`
             );
 
             if (result.status === 200) {

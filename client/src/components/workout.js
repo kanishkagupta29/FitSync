@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/workout.css";
 import exerciseData from "../data/exercise.json";
 import axios from "axios";
+import API_BASE_URL from "../apiconfig";
 
 function Workout({ getEmailFromToken }) {
   const [hasStarted, setHasStarted] = useState(false);
@@ -22,7 +23,7 @@ function Workout({ getEmailFromToken }) {
         return;
       }
       try {
-        const result = await axios.get(`http://localhost:5000/goal-weight?email=${email}`);
+        const result = await axios.get(`${API_BASE_URL}/goal-weight?email=${email}`);
         if (result.status === 200) {
           console.log(result.data);
           setgoalweight(result.data);
@@ -56,7 +57,7 @@ function Workout({ getEmailFromToken }) {
     const sendCalorieData = async () => {
       if (isComplete) {
         try {
-          await axios.post('http://localhost:5000/workout-calorie', {
+          await axios.post(`${API_BASE_URL}/workout-calorie`, {
             calories_burned,
             email: getEmailFromToken()
           });

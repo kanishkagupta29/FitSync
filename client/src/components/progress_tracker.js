@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import '../styles/progresstracker.css';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import API_BASE_URL from '../apiconfig';
 
 export default function Results({ getEmailFromToken }) {
   const goal=2300; // Assuming goal is passed as a prop
@@ -30,7 +31,7 @@ export default function Results({ getEmailFromToken }) {
     try {
       const formattedDate = new Date(date).toISOString().split('T')[0];
       console.log("dateinhtml-->", formattedDate);
-      const response = await axios.get(`http://localhost:5000/daily-log`, {
+      const response = await axios.get(`${API_BASE_URL}/daily-log`, {
         params: { email, date: formattedDate },
       });
 

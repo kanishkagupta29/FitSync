@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../styles/chatbot.css";
 import axios from 'axios';
+import API_BASE_URL from '../apiconfig';
 
 const Chatbot = () => {
   const [userMessage, setUserMessage] = useState('');
@@ -15,7 +16,7 @@ const Chatbot = () => {
     setLoading(true); // Show loading spinner or some indication
     try {
       // Send message to your backend API
-      const response = await axios.post('http://localhost:5000/chat', {
+      const response = await axios.post(`${API_BASE_URL}/chat`, {
         message: userMessage
       });
 

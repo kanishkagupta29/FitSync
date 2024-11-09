@@ -7,9 +7,6 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import axios from 'axios';
 import cron from "node-cron";
-// const express = require('express');
-// const axios = require('axios');
-// const router = express.Router();
 
 const VULTR_API_KEY = process.env.VULTR_API_KEY;
 dotenv.config();
