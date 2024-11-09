@@ -19,15 +19,18 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Database information
-const pool = new pg.Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+// const pool = new pg.Pool({
+//     user: process.env.DB_USER,
+//     host: process.env.DB_HOST,
+//     database: process.env.DB_DATABASE,
+//     password: process.env.DB_PASSWORD,
+//     port: process.env.DB_PORT,
    
     
-});
+// });
+const pool = new pg.Pool({
+  connectionString: process.env.POSTGRES_URL,
+})
 // pool.connect()
 //   .then(client => {
 //     console.log('Connected to PostgreSQL on Vultr');
