@@ -28,9 +28,9 @@ function DailyGoal({ getEmailFromToken }) {
 
     function handleCompleteMeals() {
         let newMessage = '';
-        if (totalCalories < 1100) {
+        if (totalCalories > 200) {
             newMessage = "You're a bit below your target for today. A small, balanced snack could help ensure you’re getting the nutrients you need.";
-        } else if (totalCalories >= 1100 && totalCalories < 1300) {
+        } else if (totalCalories <= 200 && totalCalories > -100) {
             newMessage = "Great job! You've hit your daily calorie goal. Keep up the balanced eating, and stay hydrated!";
         } else {
             newMessage = "You’ve slightly exceeded your calorie goal today. No worries! Consider lighter choices tomorrow to balance it out.";
