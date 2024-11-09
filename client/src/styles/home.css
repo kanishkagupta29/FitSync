@@ -43,38 +43,73 @@ body, html {
 
 /* Welcome Section */
 .home {
+    position: relative;  /* Positioning for the container */
     display: flex;
-    padding: 50px;
-    align-items: center;
-    height: 90vh;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;  /* Center the items horizontally */
+    justify-content: flex-start; /* Align content to the top */
+    height: 100vh;
+}
+
+.hero-image {
+    background: url('https://www.caloriecare.com/wp-content/uploads/2022/07/CC-2.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    height: 60vh;  /* Adjust the image height */
+    width: 100%;
 }
 
 .hero-content {
-    width: 40vw;
+    width: 60vw;  /* Adjust width as needed */
+    text-align: center;
     font-size: 23px;
     padding: 30px;
-    background-color: transparent; 
+    background-color: #E6FF94;  /* Dark background for readability */
     border-radius: 10px;
-    color: white;
+    color: black;
     font-weight: 100;
+    margin-top: -40px;  /* Pull the content up a bit */
+    z-index: 1;  /* Ensure it stays above the image */
 }
 
 .hero-content h1 {
     font-size: 35px;
     font-weight: 300;
+    margin-top: 0;  /* Remove the extra margin */
+    /* background-color: #E6FF94; */
 }
 
-.hero-image {
-    background: url('../images/back1.jpg') no-repeat center center;
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+   
+}
+
+.quote {
     position: absolute;
+    top: 50px;  /* Adjust this to position the text vertically */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the text horizontally */
+    color: black;
+    font-size: 2.5rem;  /* Adjust size as needed */
+    font-weight: bold;
+    text-align: center;
+    z-index: 1; /* Ensures the text is above the image */
+}
+.hero-image {
+    position: absolute; /* Make sure the image is behind the content */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    background: url('https://c8.alamy.com/comp/PD5GJ5/lifestyle-background-and-healthy-active-fitness-living-with-exercise-and-nutritious-diet-with-3d-render-elements-PD5GJ5.jpg') no-repeat center center;
     background-size: cover;
     background-position: center;
-    z-index: -1;
+    z-index: -1; /* Ensure the image stays behind the content */
 }
+
 
 
 /* Benefits Section */

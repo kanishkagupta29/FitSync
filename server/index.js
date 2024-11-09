@@ -24,8 +24,17 @@ const pool = new pg.Pool({
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
+   
+    
 });
+// pool.connect()
+//   .then(client => {
+//     console.log('Connected to PostgreSQL on Vultr');
+//     client.release();
+//   })
+//   .catch(err => console.error('Connection error', err.stack));
+
 
 // Load food data
 const foodData = JSON.parse(fs.readFileSync('foodData.json'));
