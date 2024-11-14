@@ -23,12 +23,15 @@ app.use(bodyParser.json());
 
 // Database information
 const pool = new pg.Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-   
+    // user: process.env.DB_USER,
+    // host: process.env.DB_HOST,
+    // database: process.env.DB_DATABASE,
+    // password: process.env.DB_PASSWORD,
+    // port: process.env.DB_PORT,
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    }
     
 });
 // pool.connect()
@@ -37,8 +40,18 @@ const pool = new pg.Pool({
 //     client.release();
 //   })
 //   .catch(err => console.error('Connection error', err.stack));
-
-
+try {
+    const client = await pool.connect();
+    console.log('Connected to the database successfully!');
+    await client.query('SELECT NOW()');
+    client.release();
+  } catch (err) {
+    console.error('Failed to connect to the database:', err);
+  }
+//    finally {
+//     await pool.end();
+//   }
+console.log('Vultr API Key:', process.env.VULTR_API_KEY);
 // Load food data
 const foodData = JSON.parse(fs.readFileSync('foodData.json'));
 
