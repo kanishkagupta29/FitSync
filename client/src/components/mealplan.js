@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
 import '../styles/mealplan.css';
+import API_BASE_URL from "../apiconfig";
 function Mealplan({getEmailFromToken}) {
     const [goalweight,setgoalweight]=useState("");
 
@@ -12,7 +13,7 @@ function Mealplan({getEmailFromToken}) {
                 return;
             }
             try {
-                const result = await axios.get(`http://localhost:5000/goal-weight?email=${email}`);
+                const result = await axios.get(`${API_BASE_URL}/goal-weight?email=${email}`);
                 if (result.status === 200) {
                     console.log(result.data);
                     setgoalweight(result.data);

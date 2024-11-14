@@ -7,6 +7,7 @@ import LogIn from './components/login';
 import Personalinfo from './components/personalinfo' ;
 import Chatbot from './components/chatbot';
 import AboutUs from './components/aboutUs';
+import FAQ from './components/faq';
 function App() {
   return (
     <Router>
@@ -19,7 +20,7 @@ function App() {
         <Route path="/personalinfo" element={<Personalinfo/>} />
         <Route path='/chatbot' element={<Chatbot/>} />
         <Route path='/about-us' element={<AboutUs/>} />
-
+        <Route path='/faq' element={<FAQ/>} />
       </Routes>
     </Router>
   );

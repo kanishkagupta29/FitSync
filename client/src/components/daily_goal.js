@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import WaterTracker from "./water_tracker";
 import "../styles/daily_goal.css";
+import API_BASE_URL from "../apiconfig";
 
 function DailyGoal({ getEmailFromToken }) {
     const [totalCalories, setTotalCalories] = useState(0);
@@ -15,7 +16,7 @@ function DailyGoal({ getEmailFromToken }) {
     async function fetchCalories() {
         const email = getEmailFromToken();
         try {
-            const result = await axios.get(`http://localhost:5000/total_calories?email=${email}`);
+            const result = await axios.get(`${API_BASE_URL}/total_calories?email=${email}`);
             if (result.status === 200) {
                 console.log("Backend calories:", result.data);
                 setTotalCalories(1200 - result.data);
@@ -27,9 +28,9 @@ function DailyGoal({ getEmailFromToken }) {
 
     function handleCompleteMeals() {
         let newMessage = '';
-        if (totalCalories < 1100) {
+        if (totalCalories > 200) {
             newMessage = "You're a bit below your target for today. A small, balanced snack could help ensure you’re getting the nutrients you need.";
-        } else if (totalCalories >= 1100 && totalCalories < 1300) {
+        } else if (totalCalories <= 200 && totalCalories > -100) {
             newMessage = "Great job! You've hit your daily calorie goal. Keep up the balanced eating, and stay hydrated!";
         } else {
             newMessage = "You’ve slightly exceeded your calorie goal today. No worries! Consider lighter choices tomorrow to balance it out.";

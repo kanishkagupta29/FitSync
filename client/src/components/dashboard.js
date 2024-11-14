@@ -57,7 +57,7 @@ function Dashboard() {
                 {/* Navigation Links */}
                 <div className="nav-links">
                     <a href="/about-us" className="nav-link">About Us</a>
-                    <a href="/contact" className="nav-link">Contact</a>
+                    <a href="/faq" className="nav-link">FAQ</a>
                     <a href="/help" className="nav-link">Help</a>
                     <a href="/settings" className="nav-link">Settings</a>
                 </div>

@@ -1,6 +1,7 @@
 import React , { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiconfig';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function SignUp() {
     e.preventDefault();
     if(form.email && form.password){
       try{
-        const result = await axios.post('http://localhost:5000/api/signup', form);
+        const result = await axios.post(`${API_BASE_URL}/api/signup`, form);
         if(result.status === 200){
           localStorage.setItem('token', result.data.token);
           navigate('/personalinfo');

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../apiconfig.js';
 import '../styles/calorieLog.css';
 
 function CalorieLog({getEmailFromToken}) {
@@ -25,7 +26,7 @@ function CalorieLog({getEmailFromToken}) {
     async function fetchFoodItems() {
         const email = getEmailFromToken();
         try {
-            const result = await axios.get(`http://localhost:5000/calorie-log?email=${email}`);
+            const result = await axios.get(`${API_BASE_URL}/calorie-log?email=${email}`);
             if (result.status === 200) {
                 console.log(result.data);
                 setEatenItems(result.data);
@@ -48,7 +49,7 @@ function CalorieLog({getEmailFromToken}) {
         const email = getEmailFromToken();
         if (form.food && form.quantity) {
             try {
-                const result = await axios.post('http://localhost:5000/calorie-log', {
+                const result = await axios.post(`${API_BASE_URL}/calorie-log`, {
                     ...form,
                     email
                 });
@@ -67,7 +68,7 @@ function CalorieLog({getEmailFromToken}) {
     async function searchItem(e) {
         if (form.food) {
             try {
-                const result = await axios.post('http://localhost:5000/calorie-log-similar-foods', form);
+                const result = await axios.post(`${API_BASE_URL}/calorie-log-similar-foods`, form);
                 if (result.status === 200) {
                     const foods = result.data.foodItem.map(item => item.Food);
                     setSimilarFoods(foods);

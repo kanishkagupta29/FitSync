@@ -7,9 +7,6 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import axios from 'axios';
 import cron from "node-cron";
-// const express = require('express');
-// const axios = require('axios');
-// const router = express.Router();
 
 const VULTR_API_KEY = process.env.VULTR_API_KEY;
 dotenv.config();
@@ -32,8 +29,16 @@ const pool = new pg.Pool({
     ssl: {
       rejectUnauthorized: false,
     }
+// const pool = new pg.Pool({
+//     user: process.env.DB_USER,
+//     host: process.env.DB_HOST,
+//     database: process.env.DB_DATABASE,
+//     password: process.env.DB_PASSWORD,
+//     port: process.env.DB_PORT,
+   
     
-});
+ });
+
 // pool.connect()
 //   .then(client => {
 //     console.log('Connected to PostgreSQL on Vultr');
@@ -53,6 +58,8 @@ try {
 //   }
 console.log('Vultr API Key:', process.env.VULTR_API_KEY);
 // Load food data
+// app.options('*', cors());  // Pre-flight request handling
+
 const foodData = JSON.parse(fs.readFileSync('foodData.json'));
 
 cron.schedule("0 0 * * *", async () => {
