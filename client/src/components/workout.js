@@ -38,15 +38,15 @@ function Workout({ getEmailFromToken }) {
   const goal = goalweight;
   let playtime = null;
   let breaktime = null;
-  if (goal && goal[0].goal === "lose weight") {
+  if (goal && goal.goal === "lose weight") {
     playtime = 45;
     breaktime = 5;
     maxRepeats = 3;
-  } else if (goal && goal[0].goal === "maintain weight") {
+  } else if (goal && goal.goal === "maintain weight") {
     playtime = 30;
     breaktime = 15;
     maxRepeats = 2;
-  } else if (goal && goal[0].goal === "gain weight") {
+  } else if (goal && goal.goal === "gain weight") {
     playtime = 30;
     breaktime = 20;
     maxRepeats = 2;

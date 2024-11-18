@@ -69,8 +69,9 @@ function CalorieLog({getEmailFromToken}) {
         if (form.food) {
             try {
                 const result = await axios.post(`${API_BASE_URL}/calorie-log-similar-foods`, form);
+                console.log(result);
                 if (result.status === 200) {
-                    const foods = result.data.foodItem.map(item => item.Food);
+                    const foods = result.data.foodItems.map(item => item.Food);
                     setSimilarFoods(foods);
                     console.log(foods);
                 }

@@ -480,19 +480,19 @@ function Mealplan({getEmailFromToken}) {
       let mealPlan = null;
 
 // Assuming 'goal' is defined somewhere in your code
-
-if (goal && goal[0].goal === "lose weight") {
+console.log(goal);
+if (goal && goal.goal === "lose weight") {
   mealPlan = mealPlanlose;
-} else if (goal && goal[0].goal === "maintain weight") {
+} else if (goal && goal.goal === "maintain weight") {
   mealPlan = mealPlanmaintain;
-} else if (goal && goal[0].goal === "gain weight") {
+} else if (goal && goal.goal === "gain weight") {
   mealPlan = mealPlangain;
 }
       
 
 return (
     <section className="meal-plan">
-        <h3 className="heading">Your Goal Is: {goal[0]?.goal}</h3>
+        <h3 className="heading">Your Goal Is: {goal?.goal}</h3>
         <h5 className="heading">Suggested meal plan according to your goal:</h5>
         {mealPlan && mealPlan.map((dayPlan, index) => (
             <div key={index} className="day-plan">
