@@ -12,7 +12,7 @@ import User from "./models/users.js";
 import DailyLog from "./models/dailylog.js";
 import PersonalDetails from "./models/personaldetails.js";
 import FoodLog from "./models/foodlog.js";
-const VULTR_API_KEY = process.env.VULTR_API_KEY;
+// const VULTR_API_KEY = process.env.VULTR_API_KEY;
 dotenv.config();
 // import User from "./models/users"
 const app = express();
@@ -60,7 +60,7 @@ app.use(bodyParser.json());
 //    finally {
 //     await pool.end();
 //   }
-console.log('Vultr API Key:', process.env.VULTR_API_KEY);
+// console.log('Vultr API Key:', process.env.VULTR_API_KEY);
 // Load food data
 // app.options('*', cors());  // Pre-flight request handling
 // const mongoose = require('mongoose');
@@ -128,36 +128,36 @@ cron.schedule("0 0 * * *", async () => {
 //       res.status(500).send('Error generating chatbot response');
 //     }
 //   });
-app.post('/chat', async (req, res) => {
-    const { message } = req.body;
-    console.log("---->user message", message);
-    try {
-        const response = await axios.post(
-            'https://api.vultrinference.com/v1/chat/completions/RAG',
-            {
-                collection: 'fitsync',
-                model: 'llama2-7b-chat-Q5_K_M',
-                messages: [{ role: 'user', content: message }],
-                max_tokens: 512,
-                temperature: 0.8,
-                top_k: 40,
-                top_p: 0.9
-            },
-            {
-                headers: {
-                    'Authorization': `Bearer ${process.env.VULTR_API_KEY}`,
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-        const chatbotResponse = response.data.choices[0].message.content;
-        console.log("-->c", chatbotResponse);
-        res.json({ response: chatbotResponse });
-    } catch (error) {
-        console.error('Error communicating with Vultr API:', error);
-        res.status(500).send('Error generating chatbot response');
-    }
-});
+// app.post('/chat', async (req, res) => {
+//     const { message } = req.body;
+//     console.log("---->user message", message);
+//     try {
+//         const response = await axios.post(
+//             'https://api.vultrinference.com/v1/chat/completions/RAG',
+//             {
+//                 collection: 'fitsync',
+//                 model: 'llama2-7b-chat-Q5_K_M',
+//                 messages: [{ role: 'user', content: message }],
+//                 max_tokens: 512,
+//                 temperature: 0.8,
+//                 top_k: 40,
+//                 top_p: 0.9
+//             },
+//             {
+//                 headers: {
+//                     'Authorization': `Bearer ${process.env.VULTR_API_KEY}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             }
+//         );
+//         const chatbotResponse = response.data.choices[0].message.content;
+//         console.log("-->c", chatbotResponse);
+//         res.json({ response: chatbotResponse });
+//     } catch (error) {
+//         console.error('Error communicating with Vultr API:', error);
+//         res.status(500).send('Error generating chatbot response');
+//     }
+// });
 
 // 
 // app.post('/water_intake', async (req, res) => {
