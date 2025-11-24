@@ -12,6 +12,7 @@ import User from "./models/users.js";
 import DailyLog from "./models/dailylog.js";
 import PersonalDetails from "./models/personaldetails.js";
 import FoodLog from "./models/foodlog.js";
+import razorpay from 'razorpay';
 // const VULTR_API_KEY = process.env.VULTR_API_KEY;
 dotenv.config();
 // import User from "./models/users"
@@ -66,6 +67,13 @@ app.use(bodyParser.json());
 // const mongoose = require('mongoose');
 
 // require('dotenv').config();  // Add this to load environment variables
+
+
+// Razorpay client (mock credentials for now)
+const razorpayClient = new razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID || 'mock_key',
+    key_secret: process.env.RAZORPAY_KEY_SECRET || 'mock_secret'
+});
 
 async function dbconnect() {
     try {
@@ -821,6 +829,205 @@ app.get('/goal-weight', async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+
+// ========== SUBSCRIPTION ENDPOINTS (NEW) ==========
+
+// Create Subscription Collection Schema (will be created in MongoDB automatically)
+const subscriptionSchema = new mongoose.Schema({
+    id: String,
+    email: String,
+    plan_type: String, // 'trial' or 'monthly'
+    status: String, // 'active' or 'expired'
+    start_date: String,
+    end_date: String,
+    amount: Number,
+    created_at: String
+});
+
+const Subscription = mongoose.models.Subscription || mongoose.model('Subscription', subscriptionSchema);
+
+const paymentOrderSchema = new mongoose.Schema({
+    order_id: String,
+    email: String,
+    amount: Number,
+    status: String,
+    payment_id: String,
+    created_at: String,
+    paid_at: String
+});
+
+const PaymentOrder = mongoose.models.PaymentOrder || mongoose.model('PaymentOrder', paymentOrderSchema);
+
+// Create subscription (trial or monthly)
+app.post('/api/subscription/create', async (req, res) => {
+    const { email, plan_type } = req.body;
+
+    try {
+        // Check if user already has an active subscription
+        const existing = await Subscription.findOne({ email, status: 'active' });
+        if (existing) {
+            return res.status(400).json({ detail: "Active subscription already exists" });
+        }
+
+        // Check if user has used trial before
+        if (plan_type === 'trial') {
+            const trialUsed = await Subscription.findOne({ email, plan_type: 'trial' });
+            if (trialUsed) {
+                return res.status(400).json({ detail: "Free trial already used" });
+            }
+        }
+
+        const startDate = new Date();
+        let endDate;
+        let amount;
+
+        if (plan_type === 'trial') {
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 1 day
+            amount = 0;
+        } else {
+            endDate = new Date(startDate.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
+            amount = 99;
+        }
+
+        const subscription = new Subscription({
+            id: Date.now().toString(),
+            email,
+            plan_type,
+            status: 'active',
+            start_date: startDate.toISOString(),
+            end_date: endDate.toISOString(),
+            amount,
+            created_at: startDate.toISOString()
+        });
+
+        await subscription.save();
+
+        res.status(200).json({
+            message: "Subscription created successfully",
+            subscription: subscription.toObject()
+        });
+    } catch (error) {
+        console.error('Error creating subscription:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Get subscription status
+app.get('/api/subscription/status/:email', async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const subscription = await Subscription.findOne({ email, status: 'active' });
+
+        if (!subscription) {
+            const trialUsed = await Subscription.findOne({ email, plan_type: 'trial' });
+            return res.status(200).json({
+                has_subscription: false,
+                trial_used: trialUsed !== null
+            });
+        }
+
+        // Check if subscription expired
+        const endDate = new Date(subscription.end_date);
+        const currentTime = new Date();
+
+        if (currentTime > endDate) {
+            subscription.status = 'expired';
+            await subscription.save();
+
+            return res.status(200).json({
+                has_subscription: false,
+                expired: true,
+                trial_used: subscription.plan_type === 'trial'
+            });
+        }
+
+        const daysRemaining = Math.ceil((endDate - currentTime) / (1000 * 60 * 60 * 24));
+
+        res.status(200).json({
+            has_subscription: true,
+            subscription: subscription.toObject(),
+            days_remaining: daysRemaining
+        });
+    } catch (error) {
+        console.error('Error checking subscription status:', error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Create payment order
+app.post('/api/payment/create-order', async (req, res) => {
+    const { email, amount } = req.body;
+
+    try {
+        const razorpayOrder = await razorpayClient.orders.create({
+            amount: amount,
+            currency: 'INR',
+            payment_capture: 1
+        });
+
+        const paymentOrder = new PaymentOrder({
+            order_id: razorpayOrder.id,
+            email,
+            amount,
+            status: 'created',
+            created_at: new Date().toISOString()
+        });
+
+        await paymentOrder.save();
+
+        res.status(200).json(razorpayOrder);
+    } catch (error) {
+        console.error('Error creating payment order:', error);
+        res.status(500).json({ detail: `Payment order creation failed: ${error.message}` });
+    }
+});
+
+// Verify payment
+app.post('/api/payment/verify', async (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, email } = req.body;
+
+    try {
+        // Update payment order status
+        await PaymentOrder.findOneAndUpdate(
+            { order_id: razorpay_order_id },
+            {
+                status: 'paid',
+                payment_id: razorpay_payment_id,
+                paid_at: new Date().toISOString()
+            }
+        );
+
+        // Create monthly subscription
+        const startDate = new Date();
+        const endDate = new Date(startDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+        const subscription = new Subscription({
+            id: Date.now().toString(),
+            email,
+            plan_type: 'monthly',
+            status: 'active',
+            start_date: startDate.toISOString(),
+            end_date: endDate.toISOString(),
+            amount: 99,
+            created_at: startDate.toISOString()
+        });
+
+        await subscription.save();
+
+        res.status(200).json({
+            message: "Payment verified and subscription activated",
+            subscription: subscription.toObject()
+        });
+    } catch (error) {
+        console.error('Error verifying payment:', error);
+        res.status(500).json({ detail: `Payment verification failed: ${error.message}` });
+    }
+});
+
+// ========== END SUBSCRIPTION ENDPOINTS ==========
+
 
 
 

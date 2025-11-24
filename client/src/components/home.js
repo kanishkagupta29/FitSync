@@ -18,6 +18,7 @@ function Home() {
                 <div className="nav-links">
                     <a href="/about-us" className="nav-link">About Us</a>
                     <a href="/contact" className="nav-link">Contact</a>
+                    <a href="/subscription" className="nav-link subscription-link">Subscription</a>
                     <a href="/signup" className="nav-link">SignUp</a>
                     <a href="/login" className="nav-link">Login</a>
                 </div>
