@@ -14,6 +14,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* added subscription */}
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} >
         </Route>
